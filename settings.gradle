@@ -1,1 +1,4 @@
 rootProject.name = 'general-meeting-management-service-server'
+include 'core'
+include 'client'
+include 'admin'

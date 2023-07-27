@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+
+}
+
+clean {
+    delete file('src/main/generated')
+}
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}

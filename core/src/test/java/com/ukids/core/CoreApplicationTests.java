@@ -1,10 +1,10 @@
-package com.ukids.generalmeetingmanagementserviceserver;
+package com.ukids.core;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GeneralMeetingManagementServiceServerApplicationTests {
+class CoreApplicationTests {
 
 	@Test
 	void contextLoads() {
