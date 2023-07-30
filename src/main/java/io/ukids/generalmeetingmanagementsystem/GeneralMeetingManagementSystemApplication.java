@@ -1,13 +1,13 @@
-package com.ukids.core;
+package io.ukids.generalmeetingmanagementsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CoreApplication {
+public class GeneralMeetingManagementSystemApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CoreApplication.class, args);
+		SpringApplication.run(GeneralMeetingManagementSystemApplication.class, args);
 	}
 
 }
