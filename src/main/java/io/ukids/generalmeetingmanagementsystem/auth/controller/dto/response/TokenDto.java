@@ -1,4 +1,4 @@
-package io.ukids.generalmeetingmanagementsystem.auth.dto.response;
+package io.ukids.generalmeetingmanagementsystem.auth.controller.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

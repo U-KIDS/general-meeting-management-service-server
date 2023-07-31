@@ -58,8 +58,8 @@ public class SecurityConfig {
                 )
 
                 .authorizeRequests(authorizeHttpRequest -> authorizeHttpRequest
-                        .antMatchers("/api/**").hasAnyRole("ROLE_ADMIN", "ROLE_USER")
-                        .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
+                        .antMatchers("/api/**").authenticated()
+                        .antMatchers("/admin/**").authenticated()
                         .antMatchers("/auth/**").permitAll()
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()

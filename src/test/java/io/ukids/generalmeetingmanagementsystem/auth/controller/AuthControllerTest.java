@@ -1,25 +1,23 @@
 package io.ukids.generalmeetingmanagementsystem.auth.controller;
 
-import io.ukids.generalmeetingmanagementsystem.auth.dto.request.UserLoginDto;
-import io.ukids.generalmeetingmanagementsystem.common.ControllerTest;
+import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.LoginDto;
+import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.SignupDto;
+import io.ukids.generalmeetingmanagementsystem.common.AbstractControllerTest;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-@Transactional
-@Rollback
-class AuthControllerTest extends ControllerTest {
+class AuthControllerTest extends AbstractControllerTest {
 
     @Autowired
     MemberRepository memberRepository;
@@ -33,16 +31,36 @@ class AuthControllerTest extends ControllerTest {
     }
 
     @Test
-    public void userLogin() throws Exception {
+    @DisplayName("로그인")
+    public void login() throws Exception {
 
-        UserLoginDto userLoginDto = UserLoginDto.builder()
+        LoginDto loginDto = LoginDto.builder()
                 .studentNumber("20194059")
-                .name("김태완")
+                .password("password")
                 .build();
 
         this.mockMvc.perform(post("/auth/login/user")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(userLoginDto)))
+                        .content(objectMapper.writeValueAsString(loginDto)))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("회원가입")
+    public void signup() throws Exception{
+        SignupDto signupDto = SignupDto.builder()
+                .studentNumber("20231111")
+                .password("비밀번호")
+                .name("이름")
+                .major("학과")
+                .college("단과대학")
+                .grade(3)
+                .imageUrl("url")
+                .build();
+
+        this.mockMvc.perform(post("/auth/signup")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(signupDto)))
                 .andDo(print());
     }
 
