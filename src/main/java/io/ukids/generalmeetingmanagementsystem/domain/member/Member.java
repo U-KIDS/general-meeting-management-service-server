@@ -14,7 +14,7 @@ public class Member {
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     private String studentNumber;
 
@@ -26,6 +26,10 @@ public class Member {
 
     private String major;
 
+    private Integer grade;
+
+    private String imageUrl;
+
     private boolean activate;
 
     @Enumerated(EnumType.STRING)
@@ -33,14 +37,23 @@ public class Member {
     private Set<Authority> authorities;
 
     @Builder
-    public Member(String studentNumber, String password, String name, String college, String major, Set<Authority> authorities) {
+    public Member(String studentNumber, String password, String name, String college, String major, Integer grade, String imageUrl, Set<Authority> authorities) {
         this.studentNumber = studentNumber;
         this.password = password;
         this.name = name;
         this.college = college;
         this.major = major;
+        this.grade = grade;
+        this.imageUrl = imageUrl;
         this.authorities = authorities;
-        this.activate = true;
+        this.activate = false;
+    }
+
+    public void permit() {
+        if (activate) {
+            throw new IllegalStateException("이미 활성화된 유저입니다.");
+        }
+        activate = true;
     }
 
     public void block() {
@@ -48,11 +61,5 @@ public class Member {
             throw new IllegalStateException("이미 Block 된 유저입니다.");
         }
         activate = false;
-    }
-
-    public void validate(String name) {
-        if (this.name.equals(name)) {
-            throw new IllegalStateException("학번과 이름이 일치하지 않습니다.");
-        }
     }
 }
