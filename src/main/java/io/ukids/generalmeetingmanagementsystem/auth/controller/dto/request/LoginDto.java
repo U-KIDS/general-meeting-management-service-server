@@ -1,4 +1,4 @@
-package io.ukids.generalmeetingmanagementsystem.auth.dto.request;
+package io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 
 @Data
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AdminLoginDto {
+public class LoginDto {
 
     @NotNull
     private String studentNumber;
@@ -18,7 +19,7 @@ public class AdminLoginDto {
     private String password;
 
     @Builder
-    public AdminLoginDto(String studentNumber, String password) {
+    public LoginDto(String studentNumber, String password) {
         this.studentNumber = studentNumber;
         this.password = password;
     }
