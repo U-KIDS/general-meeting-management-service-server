@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.domain.member;
 
+import io.ukids.generalmeetingmanagementsystem.domain.basetime.BaseTimeEntity;
 import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import lombok.*;
 
@@ -9,7 +10,7 @@ import java.util.Set;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @Column(name = "member_id")
