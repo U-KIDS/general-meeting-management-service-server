@@ -39,7 +39,7 @@ class AuthControllerTest extends AbstractControllerTest {
                 .password("password")
                 .build();
 
-        this.mockMvc.perform(post("/auth/login/user")
+        this.mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginDto)))
                 .andDo(print());
