@@ -6,6 +6,7 @@ import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.Signu
 import io.ukids.generalmeetingmanagementsystem.common.mapper.MemberMapper;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
+import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -39,7 +40,7 @@ public class AuthService {
 
     @Transactional
     public Long signup(SignupDto signupDto) {
-        Member member = memberMapper.map(signupDto);
+        Member member = memberMapper.map(signupDto, Authority.ROLE_USER);
         return memberRepository.save(member).getId();
     }
 
