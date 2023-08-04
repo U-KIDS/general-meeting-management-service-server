@@ -2,9 +2,12 @@ package io.ukids.generalmeetingmanagementsystem.common.mapper;
 
 import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.SignupDto;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
+import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 
 @Component
 @RequiredArgsConstructor
@@ -12,15 +15,16 @@ public class MemberMapper {
 
     private final PasswordEncoder passwordEncoder;
 
-    public Member map(SignupDto signupDto) {
+    public Member map(SignupDto signupDto, Authority authority) {
         return Member.builder()
                 .studentNumber(signupDto.getStudentNumber())
-                .password(signupDto.getPassword())
+                .password(passwordEncoder.encode(signupDto.getPassword()))
                 .name(signupDto.getName())
                 .college(signupDto.getCollege())
                 .major(signupDto.getMajor())
                 .grade(signupDto.getGrade())
                 .imageUrl(signupDto.getImageUrl())
+                .authorities(Collections.singleton(authority))
                 .build();
     }
 }
