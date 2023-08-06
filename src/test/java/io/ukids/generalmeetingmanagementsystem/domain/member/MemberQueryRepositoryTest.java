@@ -40,7 +40,7 @@ class MemberQueryRepositoryTest {
                 .build();
         PageRequest pageRequest = PageRequest.of(0, 5);
 
-        Page<Member> pagedMembers = memberQueryRepository.findDynamicQueryMembers(condition, pageRequest);
+        List<Member> pagedMembers = memberQueryRepository.findDynamicQueryMembers(condition, pageRequest);
 
         System.out.println("=============");
         pagedMembers.forEach(m -> System.out.println(m.getStudentNumber()));

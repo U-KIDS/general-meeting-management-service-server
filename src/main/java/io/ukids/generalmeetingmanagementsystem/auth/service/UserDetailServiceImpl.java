@@ -1,5 +1,7 @@
 package io.ukids.generalmeetingmanagementsystem.auth.service;
 
+import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
+import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +28,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String studentNumber) throws UsernameNotFoundException {
         return memberRepository.findOneWithAuthoritiesByStudentNumber(studentNumber)
                 .map(member -> createUser(member))
-                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
     }
 
     private User createUser(Member member) {
         if(!member.isActivate()) {
-            throw new RuntimeException("활성화되어 있지 않음");
+            throw new BaseException(ErrorCode.MEMBER_NOT_ACTIVATE);
         }
 
         List<GrantedAuthority> grantedAuthorityList = member.getAuthorities().stream()
