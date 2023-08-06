@@ -13,12 +13,15 @@ public class MemberSearchCondition {
 
     private String major;
 
+    private String name;
+
     private Boolean activate;
 
     @Builder
-    public MemberSearchCondition(String college, String major, Boolean activate) {
+    public MemberSearchCondition(String college, String major, String name, Boolean activate) {
         this.college = college;
         this.major = major;
+        this.name = name;
         this.activate = activate;
     }
 

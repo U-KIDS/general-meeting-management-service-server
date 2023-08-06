@@ -3,6 +3,8 @@ package io.ukids.generalmeetingmanagementsystem.auth.service;
 import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.LoginDto;
 import io.ukids.generalmeetingmanagementsystem.auth.jwt.TokenProvider;
 import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.SignupDto;
+import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
+import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.common.mapper.MemberMapper;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
@@ -27,7 +29,9 @@ public class AuthService {
 
     public String login(LoginDto loginDto) {
 
-        validateExist(loginDto.getStudentNumber());
+        if (!memberRepository.existsByStudentNumber(loginDto.getStudentNumber())) {
+            throw new BaseException(ErrorCode.MEMBER_NOT_FOUND);
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getStudentNumber(), loginDto.getPassword());
@@ -40,13 +44,13 @@ public class AuthService {
 
     @Transactional
     public Long signup(SignupDto signupDto) {
+
+        if (memberRepository.existsByStudentNumber(signupDto.getStudentNumber())) {
+            throw new BaseException(ErrorCode.MEMBER_ALREADY_EXISTS);
+        }
+
         Member member = memberMapper.map(signupDto, Authority.ROLE_USER);
         return memberRepository.save(member).getId();
     }
 
-    private void validateExist(String studentNumber) {
-        if (!memberRepository.existsByStudentNumber(studentNumber)) {
-            throw new RuntimeException("가입되지 않은 유저입니다.");
-        }
-    }
 }

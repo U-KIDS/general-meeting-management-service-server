@@ -19,9 +19,9 @@ public class MemberQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<Member> findDynamicQueryMembers(MemberSearchCondition condition, Pageable pageable) {
+    public List<Member> findDynamicQueryMembers(MemberSearchCondition condition, Pageable pageable) {
 
-        List<Member> result = jpaQueryFactory
+        return jpaQueryFactory
                 .selectFrom(member)
                 .where(
                         eqCollege(condition.getCollege()),
@@ -31,22 +31,27 @@ public class MemberQueryRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-
-        return new PageImpl<>(result);
     }
 
     private BooleanExpression eqCollege(String searchCollege) {
-        if (StringUtils.isEmpty(searchCollege)) {
+        if (StringUtils.hasText(searchCollege)) {
             return null;
         }
         return member.college.eq(searchCollege);
     }
 
     private BooleanExpression eqMajor(String searchMajor) {
-        if (StringUtils.isEmpty(searchMajor)) {
+        if (StringUtils.hasText(searchMajor)) {
             return null;
         }
         return member.major.eq(searchMajor);
+    }
+
+    private BooleanExpression containsName(String searchName) {
+        if (StringUtils.hasText(searchName)) {
+            return null;
+        }
+        return member.name.contains(searchName);
     }
 
     private BooleanExpression eqActivate(Boolean searchActivate) {
