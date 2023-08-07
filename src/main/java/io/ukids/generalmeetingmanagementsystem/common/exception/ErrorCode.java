@@ -26,7 +26,9 @@ public enum ErrorCode {
     MEETING_ALREADY_START(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 시작된 회의입니다."),
     MEETING_ALREADY_END(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 종료된 회의입니다."),
 
-    AGENDA_ALREADY_VOTED(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 투표한 안건입니다.")
+    AGENDA_ALREADY_VOTED(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 투표한 안건입니다."),
+    AGENDA_ALREADY_STARTED(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 시작된 안건입니다."),
+    AGENDA_ALREADY_ENDED(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 종료된 안건입니다."),
     ;
 
     private final int httpStatus;
