@@ -1,5 +1,10 @@
 package io.ukids.generalmeetingmanagementsystem.admin.service;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
+import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
+import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
+import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
+import io.ukids.generalmeetingmanagementsystem.common.mapper.MemberMapper;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberQueryRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
@@ -10,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,15 +24,31 @@ public class MemberAdminService {
 
     private final MemberRepository memberRepository;
     private final MemberQueryRepository memberQueryRepository;
+    private final MemberMapper memberMapper;
 
-    public List<Member> query(MemberSearchCondition condition, Pageable pageable) {
-        return memberQueryRepository.findDynamicQueryMembers(condition, pageable);
+    public ListDto<MemberListDto> query(MemberSearchCondition condition, Pageable pageable) {
+        List<Member> members = memberQueryRepository.findDynamicQueryMembers(condition, pageable);
+        List<MemberListDto> result = members.stream()
+                .map(memberMapper::map)
+                .collect(Collectors.toList());
+        return new ListDto(result);
     }
 
     @Transactional
     public void permit(String studentNumber) {
         Member member = memberRepository.findByStudentNumber(studentNumber)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+                .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
         member.permit();
+    }
+
+    @Transactional
+    public void block(String studentNumber) {
+        Member member = memberRepository.findByStudentNumber(studentNumber)
+                .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+        member.block();
+    }
+
+    public void delete(String studentNumber) {
+        memberRepository.deleteByStudentNumber(studentNumber);
     }
 }

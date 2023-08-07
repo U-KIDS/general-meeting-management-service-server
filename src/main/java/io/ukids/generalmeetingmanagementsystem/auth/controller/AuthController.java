@@ -24,20 +24,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(value = "/login")
-    public ApiResponse<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
-
-        String jwt = authService.login(loginDto);
-
-        TokenDto tokenDto = TokenDto.builder()
-                .token(jwt)
-                .build();
-
+    public ApiDataResponse<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
+        TokenDto tokenDto = authService.login(loginDto);
         return ApiDataResponse.of(HttpStatusCode.OK, tokenDto);
     }
 
     @PostMapping(value = "/signup")
-    public ApiResponse<CreateDto> signup(@Valid @RequestBody SignupDto signupDto) {
-        Long memberId = authService.signup(signupDto);
-        return ApiDataResponse.of(HttpStatusCode.CREATED, new CreateDto(memberId));
+    public ApiDataResponse<CreateDto> signup(@Valid @RequestBody SignupDto signupDto) {
+        CreateDto memberCreateDto = authService.signup(signupDto);
+        return ApiDataResponse.of(HttpStatusCode.CREATED, memberCreateDto);
     }
 }

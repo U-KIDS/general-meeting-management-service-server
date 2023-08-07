@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.common.mapper;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
 import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.SignupDto;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
@@ -25,6 +26,16 @@ public class MemberMapper {
                 .grade(signupDto.getGrade())
                 .imageUrl(signupDto.getImageUrl())
                 .authorities(Collections.singleton(authority))
+                .build();
+    }
+
+    public MemberListDto map(Member member) {
+        return MemberListDto.builder()
+                .studentNumber(member.getStudentNumber())
+                .name(member.getName())
+                .college(member.getCollege())
+                .major(member.getMajor())
+                .activate(member.getActivate())
                 .build();
     }
 }

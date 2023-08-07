@@ -1,28 +1,25 @@
 package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
 import io.ukids.generalmeetingmanagementsystem.admin.service.MemberAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
-import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberSearchCondition;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin/member")
 @RequiredArgsConstructor
 public class MemberAdminController {
 
-    private final MemberAdminService memberAdminService;
+    private final MemberAdminService memberService;
 
     @GetMapping
-    public ApiResponse<ListDto> query(
+    public ApiDataResponse<ListDto<MemberListDto>> query(
                 @RequestParam String college,
                 @RequestParam String major,
                 @RequestParam String name,
@@ -36,15 +33,26 @@ public class MemberAdminController {
                 .activate(activate)
                 .build();
 
-        List<Member> members = memberAdminService.query(condition, pageable);
+        ListDto<MemberListDto> members = memberService.query(condition, pageable);
 
-        return ApiDataResponse.of(HttpStatusCode.OK, new ListDto(members));
+        return ApiDataResponse.of(HttpStatusCode.OK, members);
     }
 
-    @PatchMapping("/{studentNumber}")
-    public ApiResponse<String> permit(@PathVariable String studentNumber) {
-        memberAdminService.permit(studentNumber);
-        return ApiResponse.of(HttpStatusCode.OK, "정상적으로 허락되었습니다.");
+    @DeleteMapping("/{studentNumber}")
+    public ApiResponse delete(@PathVariable String studentNumber) {
+        return ApiResponse.of(HttpStatusCode.OK);
+    }
+
+    @PatchMapping("/{studentNumber}/permit")
+    public ApiResponse permit(@PathVariable String studentNumber) {
+        memberService.permit(studentNumber);
+        return ApiResponse.of(HttpStatusCode.OK, "정상적으로 승인되었습니다.");
+    }
+
+    @PatchMapping("/{studentNumber}/block")
+    public ApiResponse block(@PathVariable String studentNumber) {
+        memberService.block(studentNumber);
+        return ApiResponse.of(HttpStatusCode.OK, "정상적으로 블락되었습니다.");
     }
 
 }

@@ -12,4 +12,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findOneWithAuthoritiesByStudentNumber(String studentNumber);
     Optional<Member> findByStudentNumber(String studentNumber);
     Boolean existsByStudentNumber(String username);
+    void deleteByStudentNumber(String studentNumber);
 }

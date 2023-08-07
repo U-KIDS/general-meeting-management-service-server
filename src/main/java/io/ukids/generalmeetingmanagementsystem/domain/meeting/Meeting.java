@@ -1,5 +1,7 @@
 package io.ukids.generalmeetingmanagementsystem.domain.meeting;
 
+import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
+import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.basetime.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -36,7 +38,7 @@ public class Meeting extends BaseTimeEntity {
 
     public void start() {
         if (activate) {
-            throw new IllegalStateException("이미 시작된 회의입니다.");
+            throw new BaseException(ErrorCode.MEETING_ALREADY_START);
         }
         activate = true;
         meetingStartAt = LocalDateTime.now();
@@ -44,7 +46,7 @@ public class Meeting extends BaseTimeEntity {
 
     public void end() {
         if (!activate) {
-            throw new IllegalStateException("이미 종료된 회의입니다.");
+            throw new BaseException(ErrorCode.MEETING_ALREADY_END);
         }
         activate = false;
     }
