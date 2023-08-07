@@ -1,9 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.client.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -11,10 +8,11 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Getter
-public class MemberMeetingClientResponseDto {
-    private Long id;
+@Builder
+public class MemberDetailClientResponseDto {
+    private Long memberId;
     private String college;
     private String major;
     private String name;
-    private List<MeetingClinetDto> meetingList;
+    private List<MeetingClientDto> meetingList;
 }
