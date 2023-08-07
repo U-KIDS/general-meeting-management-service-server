@@ -61,7 +61,7 @@ public class Member extends BaseTimeEntity {
 
     public void block() {
         if (!activate) {
-            throw new BaseException(ErrorCode.MEMBER_NOT_ACTIVATE);
+            throw new BaseException(ErrorCode.MEMBER_ALREADY_BLOCK);
         }
         activate = false;
     }
