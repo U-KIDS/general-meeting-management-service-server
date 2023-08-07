@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Data
-public class AgendaResponseDto {
+public class AgendaClientResponseDto {
     private Long id;
     private String title;
     private String description;
     private Boolean activate;
 
-    public AgendaResponseDto(Agenda agenda) {
+    public AgendaClientResponseDto(Agenda agenda) {
         this.id = agenda.getId();
         this.title = agenda.getTitle();
         this.description = agenda.getDescription();
