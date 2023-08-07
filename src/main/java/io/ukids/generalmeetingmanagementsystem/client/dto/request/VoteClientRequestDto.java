@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Data
 @Builder
-public class VoteRequestDto {
+public class VoteClientRequestDto {
     Long agendaId;
     String studentNumber;
     String voteValue;
