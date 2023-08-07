@@ -1,5 +1,7 @@
 package io.ukids.generalmeetingmanagementsystem.domain.member;
 
+import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
+import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.basetime.BaseTimeEntity;
 import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import lombok.*;
@@ -31,7 +33,7 @@ public class Member extends BaseTimeEntity {
 
     private String imageUrl;
 
-    private boolean activate;
+    private Boolean activate;
 
     @Enumerated(EnumType.STRING)
     @ElementCollection
@@ -52,14 +54,14 @@ public class Member extends BaseTimeEntity {
 
     public void permit() {
         if (activate) {
-            throw new IllegalStateException("이미 활성화된 유저입니다.");
+            throw new BaseException(ErrorCode.MEMBER_ALREADY_ACTIVATE);
         }
         activate = true;
     }
 
     public void block() {
         if (!activate) {
-            throw new IllegalStateException("이미 Block 된 유저입니다.");
+            throw new BaseException(ErrorCode.MEMBER_NOT_ACTIVATE);
         }
         activate = false;
     }
