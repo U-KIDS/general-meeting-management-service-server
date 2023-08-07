@@ -1,5 +1,9 @@
 package io.ukids.generalmeetingmanagementsystem.domain.agenda;
 
+import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
+import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaResult;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
 import io.ukids.generalmeetingmanagementsystem.domain.basetime.BaseTimeEntity;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
 import lombok.AccessLevel;
@@ -24,7 +28,9 @@ public class Agenda extends BaseTimeEntity {
 
     private String description;
 
-    private Boolean activate;
+    private AgendaStatus status;
+
+    private AgendaResult result;
 
     private LocalDateTime voteStartAt;
 
@@ -39,21 +45,21 @@ public class Agenda extends BaseTimeEntity {
         this.title = title;
         this.description = description;
         this.meeting = meeting;
-        this.activate = false;
+        this.status = AgendaStatus.NOT_STARTED;
     }
 
     public void start() {
-        if (activate) {
-            throw new IllegalStateException("이미 활성화된 안건입니다.");
+        if (!status.equals(AgendaStatus.NOT_STARTED)) {
+            throw new BaseException(ErrorCode.AGENDA_ALREADY_STARTED);
         }
-        activate = true;
+        status = AgendaStatus.IN_PROGRESS;
         voteStartAt = LocalDateTime.now();
     }
 
     public void end() {
-        if (!activate) {
-            throw new IllegalStateException("이미 종료된 안건입니다.");
+        if (!status.equals(AgendaStatus.COMPLETE)) {
+            throw new BaseException(ErrorCode.AGENDA_ALREADY_ENDED);
         }
-        activate = false;
+        status = AgendaStatus.COMPLETE;
     }
 }
