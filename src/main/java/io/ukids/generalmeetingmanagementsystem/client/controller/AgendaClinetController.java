@@ -20,7 +20,7 @@ public class AgendaClinetController {
 
     private final AgendaClientService agendaClientService;
 
-    // 모든 안건 불러오기
+    // 해당하는 회의의 모든 안건 찾기
     @GetMapping(value = "/{meetingId}")
     public ApiDataResponse<MainViewResponseDto> findMeetingAndAllAgenda(@PathVariable Long meetingId) {
         MainViewResponseDto mainViewResponseDto = agendaClientService.findMeetingAndAllAgenda(meetingId);

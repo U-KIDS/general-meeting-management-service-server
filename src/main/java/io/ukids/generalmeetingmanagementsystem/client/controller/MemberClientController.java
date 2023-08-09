@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/api/client")
 public class MemberClientController {
 
     private final MemberClientService memberClientService;
 
     // 로그인 유저 정보와 참여 가능 회의 목록 조회
-    @GetMapping(value = "/main")
+    @GetMapping(value = "/detail")
     public ApiDataResponse<MemberDetailClientResponseDto> findMemberDetail() {
         String studentNumber = SecurityUtil.getCurrentStudentNumber();
         MemberDetailClientResponseDto memberDetail = memberClientService.findMemberDetail(studentNumber);
