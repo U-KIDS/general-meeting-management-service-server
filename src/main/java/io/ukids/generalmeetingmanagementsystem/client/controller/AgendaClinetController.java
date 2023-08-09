@@ -1,6 +1,7 @@
 package io.ukids.generalmeetingmanagementsystem.client.controller;
 
 import io.ukids.generalmeetingmanagementsystem.client.dto.response.AgendaClientResponseDto;
+import io.ukids.generalmeetingmanagementsystem.client.dto.response.MainViewResponseDto;
 import io.ukids.generalmeetingmanagementsystem.client.service.AgendaClientService;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
@@ -21,9 +22,8 @@ public class AgendaClinetController {
 
     // 모든 안건 불러오기
     @GetMapping(value = "/{meetingId}")
-    public ApiDataResponse<List<AgendaClientResponseDto>> findAllAgenda(@PathVariable Long meetingId) {
-        List<AgendaClientResponseDto> agendas = agendaClientService.findAllAgenda(meetingId);
-        return ApiDataResponse.of(HttpStatusCode.OK, agendas);
+    public ApiDataResponse<MainViewResponseDto> findMeetingAndAllAgenda(@PathVariable Long meetingId) {
+        MainViewResponseDto mainViewResponseDto = agendaClientService.findMeetingAndAllAgenda(meetingId);
+        return ApiDataResponse.of(HttpStatusCode.OK, mainViewResponseDto);
     }
-
 }
