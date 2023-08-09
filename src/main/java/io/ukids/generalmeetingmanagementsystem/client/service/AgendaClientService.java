@@ -17,9 +17,9 @@ public class AgendaClientService {
 
     private final AgendaRepository agendaRepository;
     // 모든 회의 안건 찾기
-    public List<AgendaClientResponseDto> findAllAgenda(String meetingName) {
+    public List<AgendaClientResponseDto> findAllAgenda(Long meetingId) {
 
-        List<Agenda> agendas = agendaRepository.findAllByMeeting_Name(meetingName)
+        List<Agenda> agendas = agendaRepository.findAllByMeetingId(meetingId)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 회의가 없습니다."));
 
         return agendas.stream()

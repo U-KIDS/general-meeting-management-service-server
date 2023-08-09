@@ -20,9 +20,9 @@ public class AgendaClinetController {
     private final AgendaClientService agendaClientService;
 
     // 모든 안건 불러오기
-    @GetMapping(value = "/{meetingName}")
-    public ApiDataResponse<List<AgendaClientResponseDto>> findAllAgenda(@PathVariable String meetingName) {
-        List<AgendaClientResponseDto> agendas = agendaClientService.findAllAgenda(meetingName);
+    @GetMapping(value = "/{meetingId}")
+    public ApiDataResponse<List<AgendaClientResponseDto>> findAllAgenda(@PathVariable Long meetingId) {
+        List<AgendaClientResponseDto> agendas = agendaClientService.findAllAgenda(meetingId);
         return ApiDataResponse.of(HttpStatusCode.OK, agendas);
     }
 

@@ -16,12 +16,12 @@ public class AgendaClientResponseDto {
     private Long id;
     private String title;
     private String description;
-    private AgendaStatus status;
+    private String status;
 
     public AgendaClientResponseDto(Agenda agenda) {
         this.id = agenda.getId();
         this.title = agenda.getTitle();
         this.description = agenda.getDescription();
-        this.status = agenda.getStatus();
+        this.status = agenda.getStatus().name();
     }
 }
