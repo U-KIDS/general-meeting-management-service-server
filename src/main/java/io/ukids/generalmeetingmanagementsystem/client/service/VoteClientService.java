@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode.AGENDA_ALREADY_VOTED;
+import static io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,10 +34,10 @@ public class VoteClientService {
         else {
             // 투표를 아직 안한 경우 DB에 저장
             Agenda agenda = agendaRepository.findById(voteClientRequestDto.getAgendaId())
-                    .orElseThrow(()-> new IllegalArgumentException("안건을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new BaseException(AGENDA_NOT_FOUND));
 
             Member member = memberRepository.findByStudentNumber(voteClientRequestDto.getStudentNumber())
-                    .orElseThrow(()-> new IllegalArgumentException("학생을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new BaseException(MEMBER_NOT_FOUND));
 
             Vote vote = Vote.builder()
                     .voteValue(VoteValue.valueOf(voteClientRequestDto.getVoteValue()))
