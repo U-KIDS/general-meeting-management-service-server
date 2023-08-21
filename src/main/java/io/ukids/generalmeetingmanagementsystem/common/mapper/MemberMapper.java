@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.common.mapper;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
 import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.SignupDto;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;

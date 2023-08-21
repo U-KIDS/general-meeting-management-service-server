@@ -21,6 +21,7 @@ public class MeetingDetailDto {
 
     @Builder
     public static class AgendaInfoDto {
+        private Long agendaId;
         private String title;
         private AgendaStatus agendaStatus;
     }

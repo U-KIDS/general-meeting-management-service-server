@@ -1,7 +1,7 @@
 package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
-import io.ukids.generalmeetingmanagementsystem.admin.service.MemberAdminService;
+import io.ukids.generalmeetingmanagementsystem.admin.service.member.MemberAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
