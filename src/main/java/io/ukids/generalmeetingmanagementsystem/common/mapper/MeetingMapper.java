@@ -20,6 +20,7 @@ public class MeetingMapper {
         return Meeting.builder()
                 .meetingDate(meetingInfoDto.getMeetingDate())
                 .name(meetingInfoDto.getName())
+                .sponsor(meetingInfoDto.getSponsor())
                 .build();
     }
 }

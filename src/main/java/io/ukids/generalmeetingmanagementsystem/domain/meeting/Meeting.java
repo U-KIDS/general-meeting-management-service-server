@@ -23,6 +23,8 @@ public class Meeting extends BaseTimeEntity {
 
     private String name;
 
+    private String sponsor;
+
     private Boolean activate;
 
     private LocalDateTime meetingDate;
@@ -30,9 +32,10 @@ public class Meeting extends BaseTimeEntity {
     private LocalDateTime meetingStartAt;
 
     @Builder
-    public Meeting(String name, LocalDateTime meetingDate) {
+    public Meeting(String name, LocalDateTime meetingDate, String sponsor) {
         this.name = name;
         this.meetingDate = meetingDate;
+        this.sponsor = sponsor;
         this.activate = false;
     }
 
