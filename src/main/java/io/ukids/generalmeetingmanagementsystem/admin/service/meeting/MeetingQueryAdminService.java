@@ -1,9 +1,7 @@
-package io.ukids.generalmeetingmanagementsystem.admin.service;
+package io.ukids.generalmeetingmanagementsystem.admin.service.meeting;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingDetailDto;
-import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingListDto;
-import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
@@ -23,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MeetingAdminService {
+public class MeetingQueryAdminService {
 
     private final MeetingRepository meetingRepository;
     private final MeetingMapper meetingMapper;
@@ -55,36 +53,4 @@ public class MeetingAdminService {
                 .build();
     }
 
-    @Transactional
-    public CreateDto create(MeetingInfoDto meetingInfoDto) {
-        Meeting meeting = meetingMapper.map(meetingInfoDto);
-        Long id = meetingRepository.save(meeting).getId();
-
-        return new CreateDto(id);
-    }
-
-    @Transactional
-    public void start(Long id) {
-        Meeting meeting = meetingRepository.findById(id)
-                .orElseThrow(() -> new BaseException(ErrorCode.MEETING_NOT_FOUND));
-        meeting.start();
-    }
-
-    @Transactional
-    public void end(Long id) {
-        Meeting meeting = meetingRepository.findById(id)
-                .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
-        meeting.end();
-    }
-
-
-    @Transactional(readOnly = true)
-    public Long update() {
-        return null;
-    }
-
-    @Transactional(readOnly = true)
-    public void delete(Long meetingId) {
-        meetingRepository.deleteById(meetingId);
-    }
 }

@@ -1,4 +1,4 @@
-package io.ukids.generalmeetingmanagementsystem.admin.service;
+package io.ukids.generalmeetingmanagementsystem.admin.service.agenda;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaCreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class AgendaService {
+public class AgendaAdminService {
 
     private final AgendaRepository agendaRepository;
     private final AgendaMapper agendaMapper;

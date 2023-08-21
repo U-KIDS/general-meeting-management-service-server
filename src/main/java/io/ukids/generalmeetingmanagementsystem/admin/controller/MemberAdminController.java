@@ -2,6 +2,7 @@ package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
 import io.ukids.generalmeetingmanagementsystem.admin.service.member.MemberAdminService;
+import io.ukids.generalmeetingmanagementsystem.admin.service.member.MemberQueryAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberAdminController {
 
     private final MemberAdminService memberService;
+    private final MemberQueryAdminService memberQueryAdminService;
 
     @GetMapping
     public ApiDataResponse<ListDto<MemberListDto>> query(
@@ -33,7 +35,7 @@ public class MemberAdminController {
                 .activate(activate)
                 .build();
 
-        ListDto<MemberListDto> members = memberService.query(condition, pageable);
+        ListDto<MemberListDto> members = memberQueryAdminService.query(condition, pageable);
 
         return ApiDataResponse.of(HttpStatusCode.OK, members);
     }

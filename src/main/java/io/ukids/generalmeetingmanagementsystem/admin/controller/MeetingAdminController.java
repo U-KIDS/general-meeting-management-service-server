@@ -2,7 +2,8 @@ package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingListDto;
-import io.ukids.generalmeetingmanagementsystem.admin.service.MeetingAdminService;
+import io.ukids.generalmeetingmanagementsystem.admin.service.meeting.MeetingAdminService;
+import io.ukids.generalmeetingmanagementsystem.admin.service.meeting.MeetingQueryAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
@@ -17,10 +18,11 @@ import org.springframework.web.bind.annotation.*;
 public class MeetingAdminController {
 
     private final MeetingAdminService meetingService;
+    private final MeetingQueryAdminService meetingQueryAdminService;
 
     @GetMapping
     public ApiDataResponse<ListDto<MeetingListDto>> query() {
-        ListDto<MeetingListDto> members = meetingService.query();
+        ListDto<MeetingListDto> members = meetingQueryAdminService.query();
         return ApiDataResponse.of(HttpStatusCode.OK, members);
     }
 
