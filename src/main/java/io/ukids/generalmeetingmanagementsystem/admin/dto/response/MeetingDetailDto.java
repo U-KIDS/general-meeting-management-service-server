@@ -1,12 +1,27 @@
 package io.ukids.generalmeetingmanagementsystem.admin.dto.response;
 
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 public class MeetingDetailDto {
+
     private String meetingName;
-    private List<Agenda> agendas;
+    private Boolean activate;
+    private LocalDateTime meetingDate;
+    private String sponsor;
+    private List<AgendaInfoDto> agendas;
+
+    @Builder
+    public static class AgendaInfoDto {
+        private String title;
+        private AgendaStatus agendaStatus;
+    }
 }
