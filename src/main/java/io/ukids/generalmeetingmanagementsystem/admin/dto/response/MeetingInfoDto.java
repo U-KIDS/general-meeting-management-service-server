@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MeetingInfoDto {
     private String name;
+    private String sponsor;
     private LocalDateTime meetingDate;
 }

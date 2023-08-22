@@ -1,5 +1,6 @@
-package io.ukids.generalmeetingmanagementsystem.admin.service;
+package io.ukids.generalmeetingmanagementsystem.admin.service.member;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class MemberAdminService {
 
@@ -26,22 +27,12 @@ public class MemberAdminService {
     private final MemberQueryRepository memberQueryRepository;
     private final MemberMapper memberMapper;
 
-    public ListDto<MemberListDto> query(MemberSearchCondition condition, Pageable pageable) {
-        List<Member> members = memberQueryRepository.findDynamicQueryMembers(condition, pageable);
-        List<MemberListDto> result = members.stream()
-                .map(memberMapper::map)
-                .collect(Collectors.toList());
-        return new ListDto(result);
-    }
-
-    @Transactional
     public void permit(String studentNumber) {
         Member member = memberRepository.findByStudentNumber(studentNumber)
                 .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
         member.permit();
     }
 
-    @Transactional
     public void block(String studentNumber) {
         Member member = memberRepository.findByStudentNumber(studentNumber)
                 .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
