@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
 import io.ukids.generalmeetingmanagementsystem.admin.service.member.MemberAdminService;
 import io.ukids.generalmeetingmanagementsystem.admin.service.member.MemberQueryAdminService;
@@ -38,6 +39,13 @@ public class MemberAdminController {
         ListDto<MemberListDto> members = memberQueryAdminService.query(condition, pageable);
 
         return ApiDataResponse.of(HttpStatusCode.OK, members);
+    }
+
+    @GetMapping("/{studentNumber}")
+    public ApiDataResponse<MemberDetailDto> findOne(@PathVariable String studentNumber) {
+        MemberDetailDto member = memberQueryAdminService.findOnd(studentNumber);
+
+        return ApiDataResponse.of(HttpStatusCode.OK, member);
     }
 
     @DeleteMapping("/{studentNumber}")
