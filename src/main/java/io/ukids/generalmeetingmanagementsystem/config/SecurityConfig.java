@@ -58,9 +58,10 @@ public class SecurityConfig {
                 )
 
                 .authorizeRequests(authorizeHttpRequest -> authorizeHttpRequest
-                        .antMatchers("/api/**").authenticated()
-                        .antMatchers("/admin/**").authenticated()
-                        .antMatchers("/auth/**").permitAll()
+//                        .antMatchers("/api/**").authenticated()
+//                        .antMatchers("/admin/**").authenticated()
+//                        .antMatchers("/auth/**").permitAll()
+                        .antMatchers("/**").permitAll()
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
                 )

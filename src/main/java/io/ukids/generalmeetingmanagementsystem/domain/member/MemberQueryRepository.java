@@ -34,21 +34,21 @@ public class MemberQueryRepository {
     }
 
     private BooleanExpression eqCollege(String searchCollege) {
-        if (StringUtils.hasText(searchCollege)) {
+        if (!StringUtils.hasText(searchCollege)) {
             return null;
         }
         return member.college.eq(searchCollege);
     }
 
     private BooleanExpression eqMajor(String searchMajor) {
-        if (StringUtils.hasText(searchMajor)) {
+        if (!StringUtils.hasText(searchMajor)) {
             return null;
         }
         return member.major.eq(searchMajor);
     }
 
     private BooleanExpression containsName(String searchName) {
-        if (StringUtils.hasText(searchName)) {
+        if (!StringUtils.hasText(searchName)) {
             return null;
         }
         return member.name.contains(searchName);
