@@ -1,11 +1,16 @@
 package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaCreateDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.AgendaDetailDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.VoteListDto;
 import io.ukids.generalmeetingmanagementsystem.admin.service.agenda.AgendaAdminService;
+import io.ukids.generalmeetingmanagementsystem.admin.service.agenda.AgendaQueryAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
+import io.ukids.generalmeetingmanagementsystem.domain.vote.enums.VoteValue;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,9 +19,28 @@ import org.springframework.web.bind.annotation.*;
 public class AgendaAdminController {
 
     private final AgendaAdminService agendaAdminService;
+    private final AgendaQueryAdminService agendaQueryAdminService;
+
+    @GetMapping("/{meetingId}/{agendaId}")
+    public ApiDataResponse<AgendaDetailDto> findOne(
+            @PathVariable Long meetingId,
+            @PathVariable Long agendaId){
+
+        AgendaDetailDto agendaDetailDto = agendaQueryAdminService.findOne(agendaId, meetingId);
+        return ApiDataResponse.of(HttpStatusCode.OK, agendaDetailDto);
+    }
+
+    @GetMapping("/{meetingId}/{agendaId}/vote")
+    public ApiDataResponse<VoteListDto> queryVote(
+            @RequestParam VoteValue voteValue,
+            @RequestParam String name,
+            Pageable pageable) {
+
+
+    }
 
     @PostMapping("/{meetingId}")
-    public ApiDataResponse create(
+    public ApiDataResponse<CreateDto> create(
             @RequestBody AgendaCreateDto agendaCreateDto,
             @PathVariable Long meetingId) {
 
