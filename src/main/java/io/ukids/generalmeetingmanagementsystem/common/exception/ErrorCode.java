@@ -30,7 +30,9 @@ public enum ErrorCode {
     AGENDA_ALREADY_STARTED(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 시작된 안건입니다."),
     AGENDA_ALREADY_ENDED(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 종료된 안건입니다."),
     AGENDA_NOT_FOUND(HttpStatusCode.BAD_REQUEST.getStatus(), "안건을 찾을 수 없습니다."),
-    AGENDA_NOT_MATCHES_TO_MEETING(HttpStatusCode.BAD_REQUEST.getStatus(), "안건과 총회가 일치하지 않습니다.")
+    AGENDA_NOT_MATCHES_TO_MEETING(HttpStatusCode.BAD_REQUEST.getStatus(), "안건과 총회가 일치하지 않습니다."),
+
+    S3_FILE_UPLOAD_FAIL(HttpStatusCode.INTERNAL_SERVER_ERROR.getStatus(), "파일 업로드에 실패했습니다.")
     ;
 
     private final int httpStatus;
