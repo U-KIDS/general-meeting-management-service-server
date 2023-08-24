@@ -11,7 +11,6 @@ public class VoteListDto {
     private Integer size;
     private List<VoteInfoDto> voteInfoDtos;
 
-    @Builder
     public static class VoteInfoDto {
         private String name;
         private VoteValue voteValue;
