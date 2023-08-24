@@ -20,7 +20,7 @@ public enum ErrorCode {
     MEMBER_NOT_FOUND(HttpStatusCode.BAD_REQUEST.getStatus(), "유저를 찾을 수 없습니다."),
     MEMBER_ALREADY_EXISTS(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 가입된 유저입니다."),
     MEMBER_ALREADY_ACTIVATE(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 활성화된 유저입니다.."),
-    MEMBER_ALREADY_BLOCK(HttpStatusCode.BAD_REQUEST.getStatus(), "활성화 되지 않은 유저입니다."),
+    MEMBER_NOT_ACTIVATE(HttpStatusCode.BAD_REQUEST.getStatus(), "활성화 되지 않은 유저입니다."),
 
     MEETING_NOT_FOUND(HttpStatusCode.BAD_REQUEST.getStatus(), "회의를 찾을 수 없습니다."),
     MEETING_ALREADY_START(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 시작된 회의입니다."),
