@@ -52,7 +52,7 @@ public class AbstractControllerTest {
 
     }
 
-    public List<Meeting> createTestMeeting() {
+    public List<Meeting> createTestMeetings() {
 
         List<Meeting> meetings = new ArrayList<>();
 
