@@ -1,102 +1,76 @@
 package io.ukids.generalmeetingmanagementsystem.client.controller;
 
-import io.ukids.generalmeetingmanagementsystem.auth.jwt.JwtFilter;
-import io.ukids.generalmeetingmanagementsystem.auth.jwt.TokenProvider;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ukids.generalmeetingmanagementsystem.auth.controller.dto.request.LoginDto;
+import io.ukids.generalmeetingmanagementsystem.common.AbstractControllerTest;
+import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
+import io.ukids.generalmeetingmanagementsystem.domain.meeting.MeetingRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
-import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Set;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@Transactional
-@Rollback
-public class MemberClientControllerTest {
 
-    @LocalServerPort
-    private int port;
-    private MockMvc mockMvc;
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private MemberRepository memberRepository;
-    @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-    @Autowired
-    private TokenProvider tokenProvider;
+public class MemberClientControllerTest extends AbstractControllerTest {
 
+    @Autowired
+    MemberRepository memberRepository;
 
-    // 테스트용 유저 데이터
-    private String studentNumber = "20202020";
-    private String password = "testpw";
-    private String name = "홍길동";
-    private String college = "공과대학";
-    private String major = "컴퓨터공학과";
-    private Integer grade = 3;
-    private String imageUrl = null;
-    private Set<Authority> authorities;
+    @Autowired
+    MeetingRepository meetingRepository;
 
     @BeforeEach
     public void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        List<Member> members = this.createTestMembers();
+        members.forEach(m -> memberRepository.save(m));
 
-        Authority authority = Authority.ROLE_USER;
-        authorities.add(authority);
-
-        Member member = new Member(studentNumber, password, name, college, major, grade, imageUrl, authorities);
-
-        memberRepository.save(member);
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(studentNumber, password);
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String token = tokenProvider.createToken(authentication);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER,"Bearer "+ token);
-    }
-
-    @AfterEach
-    public void cleanUp() {
-//        Member member = memberRepository.findByStudentNumber(studentNumber)
-//                .orElseThrow();
-//        memberRepository.delete(member);
-        memberRepository.deleteAll();
+        List<Meeting> meetings = this.createTestMeetings();
+        meetings.stream()
+                .limit(2)   // 2개의 회의만 start
+                .peek(Meeting::start)
+                .forEach(m -> meetingRepository.save(m));
     }
 
     @Test
-    public void findMemberDetail(String token) throws Exception {
-        // given
-        String url = "http://localhost:"+port+"/api/client/detail";
+    @DisplayName("회원회의정보확인")
+    public void findMemberDetail() throws Exception {
 
-        mockMvc.perform(get(url)
-                        .header("Authorization", "Bearer" + token))
+        LoginDto loginDto = LoginDto.builder()
+                .studentNumber("20194059")
+                .password("password")
+                .build();
+
+        MvcResult result = this.mockMvc.perform(post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginDto)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String responseBody = result.getResponse().getContentAsString();
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode responseJson = objectMapper.readTree(responseBody);
+
+        JsonNode tokenNode = responseJson.path("data").path("token");
+        String token = tokenNode.asText();
+
+        System.out.println("Token: " + token);
+
+        this.mockMvc.perform(get("/api/client/detail")
+                        .header("Authorization", "Bearer " + token))
+                .andDo(print())
                 .andExpect(status().isOk());
-
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(new ObjectMapper().writeValueAsString())
     }
 }
