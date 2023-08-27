@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @Getter
 @Data
 public class MeetingClientDto {
-    private Long id;
+    private Long meetingId;
     private String meetingName;
     private LocalDateTime meetingDate;
 
     public MeetingClientDto(Meeting meeting) {
-        this.id = meeting.getId();
+        this.meetingId = meeting.getId();
         this.meetingName = meeting.getName();
         this.meetingDate = meeting.getMeetingDate();
     }
