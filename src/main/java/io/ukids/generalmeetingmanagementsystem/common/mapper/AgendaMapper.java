@@ -20,6 +20,7 @@ public class AgendaMapper {
     public Agenda map(AgendaInfoDto agendaInfoDto, Meeting meeting) {
         return Agenda.builder()
                 .title(agendaInfoDto.getTitle())
+                .meeting(meeting)
                 .build();
     }
 }
