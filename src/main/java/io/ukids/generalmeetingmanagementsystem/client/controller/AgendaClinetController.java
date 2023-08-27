@@ -22,8 +22,8 @@ public class AgendaClinetController {
 
     // 해당하는 회의의 모든 안건 찾기
     @GetMapping(value = "/{meetingId}")
-    public ApiDataResponse<MainViewResponseDto> findMeetingAndAllAgenda(@PathVariable Long meetingId) {
-        MainViewResponseDto mainViewResponseDto = agendaClientService.findMeetingAndAllAgenda(meetingId);
-        return ApiDataResponse.of(HttpStatusCode.OK, mainViewResponseDto);
+    public ApiDataResponse<List<AgendaClientResponseDto>> findMeetingAndAllAgenda(@PathVariable Long meetingId) {
+        List<AgendaClientResponseDto> agendaClientResponseDtos = agendaClientService.findAllAgenda(meetingId);
+        return ApiDataResponse.of(HttpStatusCode.OK, agendaClientResponseDtos);
     }
 }

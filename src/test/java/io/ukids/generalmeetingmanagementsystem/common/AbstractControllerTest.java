@@ -1,6 +1,8 @@
 package io.ukids.generalmeetingmanagementsystem.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
@@ -79,5 +81,34 @@ public class AbstractControllerTest {
         meetings.add(meeting3);
 
         return meetings;
+    }
+
+    public List<Agenda> createTestAgendas(Meeting meeting) {
+
+        List<Agenda> agendas = new ArrayList<>();
+
+        Agenda agenda1 = Agenda.builder()
+                .title("선거 세칙 개정안")
+                .description("세부사항")
+                .meeting(meeting)
+                .build();
+
+        Agenda agenda2 = Agenda.builder()
+                .title("조직 세칙 개정안")
+                .description("세부사항")
+                .meeting(meeting)
+                .build();
+
+        Agenda agenda3 = Agenda.builder()
+                .title("학생회칙 개정안")
+                .description("세부사항")
+                .meeting(meeting)
+                .build();
+
+        agendas.add(agenda1);
+        agendas.add(agenda2);
+        agendas.add(agenda3);
+
+        return agendas;
     }
 }
