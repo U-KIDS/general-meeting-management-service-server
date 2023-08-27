@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 @ToString
 @RequiredArgsConstructor
+@Getter
 public class ApiResponse {
 
     private final String timeStamp = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
