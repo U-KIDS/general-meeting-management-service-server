@@ -14,10 +14,4 @@ public class MeetingListDto {
     private String name;
     private Boolean activate;
 
-    public MeetingListDto(Meeting meeting) {
-        this.meetingDate = meeting.getMeetingDate();
-        this.name = meeting.getName();
-        this.activate = meeting.getActivate();
-    }
-
 }

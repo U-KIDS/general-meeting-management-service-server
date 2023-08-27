@@ -32,9 +32,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     private User createUser(Member member) {
-        if(!member.isActivate()) {
-            throw new BaseException(ErrorCode.MEMBER_NOT_ACTIVATE);
-        }
+        member.validateActivate();
 
         List<GrantedAuthority> grantedAuthorityList = member.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.toString()))
