@@ -31,17 +31,9 @@ public class AgendaQueryAdminService {
     private final VoteRepository voteRepository;
     private final VoteQueryRepository voteQueryRepository;
 
-    public AgendaDetailDto findOne(Long agendaId, Long meetingId) {
+    public AgendaDetailDto findOne(Long agendaId) {
         Agenda agenda = agendaRepository.findById(agendaId)
                 .orElseThrow(() -> new BaseException(ErrorCode.AGENDA_NOT_FOUND));
-        Meeting meeting = meetingRepository.findById(meetingId)
-                .orElseThrow(() -> new BaseException(ErrorCode.MEETING_NOT_FOUND));
-
-        agenda.validateMeeting(meeting);
-        /*
-        TODO
-        도메인에서 검증할때 준영속인 상태로 meetingId만 전해줘도 검증 가능할까 ?
-         */
 
         AgendaDetailDto.VotePreviewDto votePreviewDto = AgendaDetailDto.VotePreviewDto.builder()
                 .agree(voteRepository.countAllByVoteValue(VoteValue.AGREE))

@@ -22,18 +22,16 @@ public class AgendaAdminController {
     private final AgendaAdminService agendaAdminService;
     private final AgendaQueryAdminService agendaQueryAdminService;
 
-    @GetMapping("/{meetingId}/{agendaId}")
+    @GetMapping("/{agendaId}")
     public ApiDataResponse<AgendaDetailDto> findOne(
-            @PathVariable Long meetingId,
             @PathVariable Long agendaId){
 
-        AgendaDetailDto agendaDetailDto = agendaQueryAdminService.findOne(agendaId, meetingId);
+        AgendaDetailDto agendaDetailDto = agendaQueryAdminService.findOne(agendaId);
         return ApiDataResponse.of(HttpStatusCode.OK, agendaDetailDto);
     }
 
-    @GetMapping("/{meetingId}/{agendaId}/vote")
+    @GetMapping("/{agendaId}/vote")
     public ApiDataResponse<VoteListDto> queryVote(
-            @PathVariable Long meetingId,
             @PathVariable Long agendaId,
             @RequestParam VoteValue voteValue,
             @RequestParam String name,
@@ -47,7 +45,7 @@ public class AgendaAdminController {
         return ApiDataResponse.of(HttpStatusCode.OK, voteListDto);
     }
 
-    @PostMapping("/{meetingId}")
+    @PostMapping("/meeting/{meetingId}")
     public ApiDataResponse<CreateDto> create(
             @RequestBody AgendaCreateDto agendaCreateDto,
             @PathVariable Long meetingId) {

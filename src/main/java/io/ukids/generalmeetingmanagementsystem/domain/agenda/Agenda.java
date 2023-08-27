@@ -62,10 +62,4 @@ public class Agenda extends BaseTimeEntity {
         }
         status = AgendaStatus.COMPLETE;
     }
-
-    public void validateMeeting(Meeting meeting) {
-        if (!this.meeting.equals(meeting)) {
-            throw new BaseException(ErrorCode.AGENDA_NOT_MATCHES_TO_MEETING);
-        }
-    }
 }
