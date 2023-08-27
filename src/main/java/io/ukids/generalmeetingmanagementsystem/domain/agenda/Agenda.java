@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.domain.agenda;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaInfoDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaResult;
@@ -63,9 +64,7 @@ public class Agenda extends BaseTimeEntity {
         status = AgendaStatus.COMPLETE;
     }
 
-    public void validateMeeting(Meeting meeting) {
-        if (!this.meeting.equals(meeting)) {
-            throw new BaseException(ErrorCode.AGENDA_NOT_MATCHES_TO_MEETING);
-        }
+    public void update(AgendaInfoDto agendaInfoDto) {
+        this.title = agendaInfoDto.getTitle();
     }
 }

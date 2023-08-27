@@ -48,8 +48,10 @@ public class MeetingAdminService {
     }
 
 
-    public Long update() {
-        return null;
+    public void update(Long meetingId, MeetingInfoDto meetingInfoDto) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new BaseException(ErrorCode.MEETING_NOT_FOUND));
+        meeting.update(meetingInfoDto);
     }
 
     public void delete(Long meetingId) {
