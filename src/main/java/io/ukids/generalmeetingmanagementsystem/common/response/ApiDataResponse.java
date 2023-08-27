@@ -1,14 +1,18 @@
 package io.ukids.generalmeetingmanagementsystem.common.response;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @ToString
+@Getter
 public class ApiDataResponse<T> extends ApiResponse{
 
-    T data;
+    private final T data;
 
     public ApiDataResponse(HttpStatusCode httpStatusCode, T data, String message) {
         super(httpStatusCode.getIsSuccess(), httpStatusCode.getStatus(), message);
+        this.data = data;
     }
 
     public static <T> ApiDataResponse<T> of(HttpStatusCode statusCode, T data) {

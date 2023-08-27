@@ -49,7 +49,7 @@ public class Member extends BaseTimeEntity {
         this.grade = grade;
         this.imageUrl = imageUrl;
         this.authorities = authorities;
-        this.activate = false;
+        this.activate = true;
     }
 
     public void permit() {
