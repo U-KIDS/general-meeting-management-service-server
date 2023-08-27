@@ -1,6 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.common.mapper;
 
-import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaCreateDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingDetailDto;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
@@ -17,9 +17,9 @@ public class AgendaMapper {
                 .build();
     }
 
-    public Agenda map(AgendaCreateDto agendaCreateDto, Meeting meeting) {
+    public Agenda map(AgendaInfoDto agendaInfoDto, Meeting meeting) {
         return Agenda.builder()
-                .title(agendaCreateDto.getTitle())
+                .title(agendaInfoDto.getTitle())
                 .build();
     }
 }

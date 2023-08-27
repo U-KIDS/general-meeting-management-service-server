@@ -1,12 +1,13 @@
 package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
-import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaCreateDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.AgendaDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.VoteListDto;
 import io.ukids.generalmeetingmanagementsystem.admin.service.agenda.AgendaAdminService;
 import io.ukids.generalmeetingmanagementsystem.admin.service.agenda.AgendaQueryAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
+import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.VoteSearchCondition;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.enums.VoteValue;
@@ -47,11 +48,25 @@ public class AgendaAdminController {
 
     @PostMapping("/meeting/{meetingId}")
     public ApiDataResponse<CreateDto> create(
-            @RequestBody AgendaCreateDto agendaCreateDto,
+            @RequestBody AgendaInfoDto agendaInfoDto,
             @PathVariable Long meetingId) {
 
-        CreateDto createDto = agendaAdminService.create(agendaCreateDto, meetingId);
+        CreateDto createDto = agendaAdminService.create(agendaInfoDto, meetingId);
         return ApiDataResponse.of(HttpStatusCode.CREATED, createDto);
+    }
+
+    @DeleteMapping("/{agendaId}")
+    public ApiResponse delete(@PathVariable Long agendaId) {
+        agendaAdminService.delete(agendaId);
+        return ApiResponse.of(HttpStatusCode.OK, "안건이 성공적으로 삭제되었습니다.");
+    }
+
+    @PatchMapping("/{agendaId}")
+    public ApiResponse update(
+            @PathVariable Long agendaId,
+            @RequestBody AgendaInfoDto agendaInfoDto) {
+        agendaAdminService.update(agendaId, agendaInfoDto);
+        return ApiResponse.of(HttpStatusCode.OK, "안건이 성공적으로 수정되었습니다.");
     }
 
 }

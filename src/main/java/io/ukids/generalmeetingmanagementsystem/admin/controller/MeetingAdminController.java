@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MeetingAdminController {
 
-    private final MeetingAdminService meetingService;
+    private final MeetingAdminService meetingAdminService;
     private final MeetingQueryAdminService meetingQueryAdminService;
 
     @GetMapping
@@ -36,19 +36,35 @@ public class MeetingAdminController {
 
     @PostMapping
     public ApiDataResponse<CreateDto> create(@RequestBody MeetingInfoDto meetingInfoDto) {
-        CreateDto createDto = meetingService.create(meetingInfoDto);
+        CreateDto createDto = meetingAdminService.create(meetingInfoDto);
         return ApiDataResponse.of(HttpStatusCode.CREATED, createDto);
     }
 
+    @DeleteMapping("/{id}")
+    public ApiResponse delete(@PathVariable Long id) {
+        meetingAdminService.delete(id);
+        return ApiResponse.of(HttpStatusCode.OK, "회의가 정상적으로 삭제되었습니다.");
+    }
+
+
     @PatchMapping("/{meetingId}/start")
     public ApiResponse start(@PathVariable Long meetingId) {
-        meetingService.start(meetingId);
+        meetingAdminService.start(meetingId);
         return ApiResponse.of(HttpStatusCode.OK);
     }
 
     @PatchMapping("{meetingId}/end")
     public ApiResponse end(@PathVariable Long meetingId) {
-        meetingService.end(meetingId);
+        meetingAdminService.end(meetingId);
         return ApiResponse.of(HttpStatusCode.OK);
     }
+
+    @PatchMapping("{meetingId}")
+    public ApiResponse update(
+            @PathVariable Long meetingId,
+            @RequestBody MeetingInfoDto meetingInfoDto ) {
+        meetingAdminService.update(meetingId, meetingInfoDto);
+        return ApiResponse.of(HttpStatusCode.OK, "회의가 정상적으로 수정되었습니다.");
+    }
+
 }

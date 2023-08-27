@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.domain.meeting;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingInfoDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.basetime.BaseTimeEntity;
@@ -52,5 +53,11 @@ public class Meeting extends BaseTimeEntity {
             throw new BaseException(ErrorCode.MEETING_ALREADY_END);
         }
         activate = false;
+    }
+
+    public void update(MeetingInfoDto meetingInfoDto) {
+        this.name = meetingInfoDto.getName();
+        this.meetingDate = meetingInfoDto.getMeetingDate();
+        this.sponsor = meetingInfoDto.getSponsor();
     }
 }

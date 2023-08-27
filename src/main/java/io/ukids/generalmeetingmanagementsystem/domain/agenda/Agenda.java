@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.domain.agenda;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaInfoDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaResult;
@@ -61,5 +62,9 @@ public class Agenda extends BaseTimeEntity {
             throw new BaseException(ErrorCode.AGENDA_ALREADY_ENDED);
         }
         status = AgendaStatus.COMPLETE;
+    }
+
+    public void update(AgendaInfoDto agendaInfoDto) {
+        this.title = agendaInfoDto.getTitle();
     }
 }
