@@ -10,8 +10,10 @@ import java.time.LocalDateTime;
 @Builder
 public class MeetingListDto {
 
+    private Long id;
     private LocalDateTime meetingDate;
     private String name;
     private Boolean activate;
+    private String sponsor;
 
 }

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -12,5 +13,6 @@ import java.time.LocalDateTime;
 public class MeetingInfoDto {
     private String name;
     private String sponsor;
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     private LocalDateTime meetingDate;
 }

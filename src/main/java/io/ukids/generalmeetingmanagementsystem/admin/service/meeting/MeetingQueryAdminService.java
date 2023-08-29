@@ -29,7 +29,7 @@ public class MeetingQueryAdminService {
     private final AgendaMapper agendaMapper;
 
     public ListDto<MeetingListDto> query() {
-        List<Meeting> meetings = meetingRepository.findAllByActivate(true);
+        List<Meeting> meetings = meetingRepository.findAll();
         List<MeetingListDto> result = meetings.stream()
                 .map(meetingMapper::map)
                 .collect(Collectors.toList());
