@@ -25,10 +25,12 @@ import java.util.stream.Collectors;
 public class MemberAdminService {
 
     private final MemberRepository memberRepository;
-    private final MemberQueryRepository memberQueryRepository;
-    private final MemberMapper memberMapper;
 
     public void update(String studentNumber, MemberInfoDto memberInfoDto) {
+        if (!memberRepository.existsByStudentNumber(memberInfoDto.getStudentName())) {
+            throw new BaseException(ErrorCode.MEMBER_CANNOT_UPDATE);
+        }
+
         Member member = memberRepository.findByStudentNumber(studentNumber)
                 .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
         member.update(memberInfoDto);
