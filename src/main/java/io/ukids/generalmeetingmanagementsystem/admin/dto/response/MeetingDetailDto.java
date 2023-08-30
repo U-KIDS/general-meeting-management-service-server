@@ -19,10 +19,16 @@ public class MeetingDetailDto {
     private String sponsor;
     private List<AgendaInfoDto> agendas;
 
-    @Builder
+    @Data
     public static class AgendaInfoDto {
         private Long agendaId;
         private String title;
         private AgendaStatus agendaStatus;
+
+        public AgendaInfoDto(Agenda agenda) {
+            this.agendaId = agenda.getId();
+            this.title = agenda.getTitle();
+            this.agendaStatus = agenda.getStatus();
+        }
     }
 }

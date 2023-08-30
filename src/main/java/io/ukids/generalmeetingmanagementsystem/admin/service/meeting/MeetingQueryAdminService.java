@@ -40,7 +40,7 @@ public class MeetingQueryAdminService {
     public MeetingDetailDto findOne(Long meetingId) {
         Meeting meeting = meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new BaseException(ErrorCode.MEETING_NOT_FOUND));
-        List<Agenda> agendas = agendaRepository.findAllByMeeting_Id(meetingId);
+        List<Agenda> agendas = agendaRepository.findAllByMeetingId(meetingId);
 
         return MeetingDetailDto.builder()
                 .meetingName(meeting.getName())
@@ -48,7 +48,7 @@ public class MeetingQueryAdminService {
                 .meetingDate(meeting.getMeetingDate())
                 .activate(meeting.getActivate())
                 .agendas(agendas.stream()
-                        .map(agenda -> agendaMapper.map(agenda))
+                        .map(agenda -> new MeetingDetailDto.AgendaInfoDto(agenda))
                         .collect(Collectors.toList()))
                 .build();
     }
