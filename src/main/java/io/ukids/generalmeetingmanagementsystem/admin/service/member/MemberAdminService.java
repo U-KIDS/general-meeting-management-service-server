@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.admin.service.member;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.request.MemberInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
@@ -26,6 +27,12 @@ public class MemberAdminService {
     private final MemberRepository memberRepository;
     private final MemberQueryRepository memberQueryRepository;
     private final MemberMapper memberMapper;
+
+    public void update(String studentNumber, MemberInfoDto memberInfoDto) {
+        Member member = memberRepository.findByStudentNumber(studentNumber)
+                .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+        member.update(memberInfoDto);
+    }
 
     public void permit(String studentNumber) {
         Member member = memberRepository.findByStudentNumber(studentNumber)

@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.domain.member;
 
+import io.ukids.generalmeetingmanagementsystem.admin.dto.request.MemberInfoDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.basetime.BaseTimeEntity;
@@ -50,6 +51,14 @@ public class Member extends BaseTimeEntity {
         this.imageUrl = imageUrl;
         this.authorities = authorities;
         this.activate = true;
+    }
+
+    public void update(MemberInfoDto memberInfoDto) {
+        this.name = memberInfoDto.getName();
+        this.studentNumber = memberInfoDto.getStudentName();
+        this.grade = memberInfoDto.getGrade();
+        this.college = memberInfoDto.getCollege();
+        this.major = memberInfoDto.getMajor();
     }
 
     public void permit() {
