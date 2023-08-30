@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.domain.member;
 
+import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,12 +18,15 @@ public class MemberSearchCondition {
 
     private Boolean activate;
 
+    private Authority authority;
+
     @Builder
-    public MemberSearchCondition(String college, String major, String name, Boolean activate) {
+    public MemberSearchCondition(String college, String major, String name, Boolean activate, Authority authority) {
         this.college = college;
         this.major = major;
         this.name = name;
         this.activate = activate;
+        this.authority = authority;
     }
 
 }
