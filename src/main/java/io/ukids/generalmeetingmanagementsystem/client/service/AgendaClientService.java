@@ -18,7 +18,7 @@ public class AgendaClientService {
 
     // 해당하는 회의의 모든 안건 찾기
     public List<AgendaClientResponseDto> findAllAgenda(Long meetingId) {
-        List<Agenda> agendas = agendaRepository.findAllByMeeting_Id(meetingId);
+        List<Agenda> agendas = agendaRepository.findAllByMeetingId(meetingId);
 
         List<AgendaClientResponseDto> agendaClientResponseDtos = agendas.stream().map(a -> new AgendaClientResponseDto(a)).collect(Collectors.toList());
 
