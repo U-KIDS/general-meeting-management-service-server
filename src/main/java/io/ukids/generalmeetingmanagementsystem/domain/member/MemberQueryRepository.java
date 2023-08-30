@@ -2,6 +2,7 @@ package io.ukids.generalmeetingmanagementsystem.domain.member;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,7 +27,9 @@ public class MemberQueryRepository {
                 .where(
                         eqCollege(condition.getCollege()),
                         eqMajor(condition.getMajor()),
-                        eqActivate(condition.getActivate())
+                        eqActivate(condition.getActivate()),
+                        containsName(condition.getName()),
+                        containsAuthority(condition.getAuthority())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -59,5 +62,12 @@ public class MemberQueryRepository {
             return null;
         }
         return member.activate.eq(searchActivate);
+    }
+
+    private BooleanExpression containsAuthority(Authority searchAuthority){
+        if(searchAuthority == null) {
+            return null;
+        }
+        return member.authorities.contains(searchAuthority);
     }
 }

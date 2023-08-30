@@ -9,6 +9,7 @@ import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberSearchCondition;
+import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +24,10 @@ public class MemberAdminController {
 
     @GetMapping
     public ApiDataResponse<ListDto<MemberListDto>> query(
-                @RequestParam String college,
-                @RequestParam String major,
-                @RequestParam String name,
-                @RequestParam Boolean activate,
+                @RequestParam(required = false) String college,
+                @RequestParam(required = false) String major,
+                @RequestParam(required = false) String name,
+                @RequestParam(required = false) Boolean activate,
                 Pageable pageable) {
 
         MemberSearchCondition condition = MemberSearchCondition.builder()
@@ -34,6 +35,7 @@ public class MemberAdminController {
                 .major(major)
                 .name(name)
                 .activate(activate)
+                .authority(Authority.ROLE_USER)
                 .build();
 
         ListDto<MemberListDto> members = memberQueryAdminService.query(condition, pageable);
