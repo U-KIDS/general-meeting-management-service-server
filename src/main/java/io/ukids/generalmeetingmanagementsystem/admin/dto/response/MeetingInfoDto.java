@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 public class MeetingInfoDto {
     private String name;
     private String sponsor;
-    @DateTimeFormat(pattern = "yyyy.MM.dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime meetingDate;
 }
