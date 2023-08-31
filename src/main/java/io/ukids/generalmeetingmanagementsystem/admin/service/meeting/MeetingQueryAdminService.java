@@ -1,6 +1,7 @@
 package io.ukids.generalmeetingmanagementsystem.admin.service.meeting;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingDetailDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingListDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
@@ -51,6 +52,13 @@ public class MeetingQueryAdminService {
                         .map(agenda -> new MeetingDetailDto.AgendaInfoDto(agenda))
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+    public MeetingInfoDto findOneUpdateValue(Long meetingId) {
+        Meeting meeting = meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new BaseException(ErrorCode.MEETING_NOT_FOUND));
+
+        return new MeetingInfoDto(meeting);
     }
 
 }

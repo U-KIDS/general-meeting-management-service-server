@@ -1,5 +1,6 @@
 package io.ukids.generalmeetingmanagementsystem.admin.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ public class MeetingDetailDto {
 
     private String meetingName;
     private Boolean activate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime meetingDate;
     private String sponsor;
     private List<AgendaInfoDto> agendas;

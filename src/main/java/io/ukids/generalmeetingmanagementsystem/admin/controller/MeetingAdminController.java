@@ -46,6 +46,11 @@ public class MeetingAdminController {
         return ApiResponse.of(HttpStatusCode.OK, "회의가 정상적으로 삭제되었습니다.");
     }
 
+    @GetMapping("/{id}")
+    public ApiDataResponse<MeetingInfoDto> findOneUpdateValue(@PathVariable Long id) {
+        MeetingInfoDto meeting = meetingQueryAdminService.findOneUpdateValue(id);
+        return ApiDataResponse.of(HttpStatusCode.OK, meeting);
+    }
 
     @PatchMapping("/{meetingId}/start")
     public ApiResponse start(@PathVariable Long meetingId) {
