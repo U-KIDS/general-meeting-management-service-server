@@ -13,7 +13,11 @@ import io.ukids.generalmeetingmanagementsystem.domain.vote.VoteSearchCondition;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.enums.VoteValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/agenda")
@@ -46,12 +50,14 @@ public class AgendaAdminController {
         return ApiDataResponse.of(HttpStatusCode.OK, voteListDto);
     }
 
-    @PostMapping("/meeting/{meetingId}")
+    @PostMapping(value = "/meeting/{meetingId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ApiDataResponse<CreateDto> create(
-            @RequestBody AgendaInfoDto agendaInfoDto,
+            @RequestPart AgendaInfoDto agendaInfoDto,
+            @RequestPart(required = false) List<MultipartFile> images,
             @PathVariable Long meetingId) {
 
-        CreateDto createDto = agendaAdminService.create(agendaInfoDto, meetingId);
+        System.out.println(images);
+        CreateDto createDto = agendaAdminService.create(agendaInfoDto, meetingId, images);
         return ApiDataResponse.of(HttpStatusCode.CREATED, createDto);
     }
 
