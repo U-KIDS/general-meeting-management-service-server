@@ -8,4 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AgendaInfoDto {
     private String title;
+    private String agendaNumber;
+    private String agendaCreateBy;
 }

@@ -50,6 +50,8 @@ public class AgendaQueryAdminService {
 
         return AgendaDetailDto.builder()
                 .title(agenda.getTitle())
+                .agendaNumber(agenda.getAgendaNumber())
+                .agendaCreateBy(agenda.getAgendaCreateBy())
                 .agendaStatus(agenda.getStatus())
                 .votePreviewDto(votePreviewDto)
                 .imageUrls(imageUrls)

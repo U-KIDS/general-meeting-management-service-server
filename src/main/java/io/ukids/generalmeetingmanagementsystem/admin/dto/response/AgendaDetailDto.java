@@ -12,6 +12,8 @@ public class AgendaDetailDto {
 
     private String title;
     private AgendaStatus agendaStatus;
+    private String agendaNumber;
+    private String agendaCreateBy;
     private VotePreviewDto votePreviewDto;
     private List<String> imageUrls;
 
