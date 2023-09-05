@@ -12,4 +12,6 @@ public interface VoteRepository extends JpaRepository<Vote,Long> {
     Boolean existsByAgenda_IdAndMember_StudentNumber(Long agndaId, String studentNumber);
     List<Vote> findAllByAgenda_Id(Long agendaId);
     Long countAllByVoteValue(VoteValue voteValue);
+    void deleteAllByAgendaId(Long agendaId);
+    void deleteAllByMember_StudentNumber(String studentNumber);
 }

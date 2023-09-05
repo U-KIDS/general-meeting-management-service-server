@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface AgendaImageRepository extends JpaRepository<AgendaImage, Long> {
     List<AgendaImage> findAllByAgendaId(Long agendaId);
+    void deleteAllByAgendaId(Long agendaId);
 }

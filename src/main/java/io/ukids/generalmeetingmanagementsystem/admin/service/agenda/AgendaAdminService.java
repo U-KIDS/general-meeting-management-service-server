@@ -12,6 +12,7 @@ import io.ukids.generalmeetingmanagementsystem.domain.agendaimage.AgendaImage;
 import io.ukids.generalmeetingmanagementsystem.domain.agendaimage.AgendaImageRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.MeetingRepository;
+import io.ukids.generalmeetingmanagementsystem.domain.vote.VoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,7 @@ public class AgendaAdminService {
     private final AgendaMapper agendaMapper;
     private final MeetingRepository meetingRepository;
     private final AgendaImageRepository agendaImageRepository;
+    private final VoteRepository voteRepository;
     private final S3Uploader s3Uploader;
 
     public CreateDto create(AgendaInfoDto agendaInfoDto, Long meetingId, List<MultipartFile> images) {
@@ -45,6 +47,8 @@ public class AgendaAdminService {
     }
 
     public void delete(Long agendaId) {
+        voteRepository.deleteAllByAgendaId(agendaId);
+        agendaImageRepository.deleteAllByAgendaId(agendaId);
         agendaRepository.deleteById(agendaId);
     }
 

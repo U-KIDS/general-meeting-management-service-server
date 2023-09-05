@@ -3,6 +3,7 @@ package io.ukids.generalmeetingmanagementsystem.admin.service.meeting;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingListDto;
+import io.ukids.generalmeetingmanagementsystem.admin.service.agenda.AgendaAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
@@ -26,6 +27,8 @@ import java.util.stream.Collectors;
 public class MeetingAdminService {
 
     private final MeetingRepository meetingRepository;
+    private final AgendaRepository agendaRepository;
+    private final AgendaAdminService agendaAdminService;
     private final MeetingMapper meetingMapper;
 
     public CreateDto create(MeetingInfoDto meetingInfoDto) {
@@ -55,6 +58,8 @@ public class MeetingAdminService {
     }
 
     public void delete(Long meetingId) {
+        agendaRepository.findAllByMeetingId(meetingId)
+                        .forEach(agenda -> agendaAdminService.delete(agenda.getId()));
         meetingRepository.deleteById(meetingId);
     }
 }
