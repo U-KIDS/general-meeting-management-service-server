@@ -25,11 +25,11 @@ public class Vote extends BaseTimeEntity {
     private VoteValue voteValue;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "agenda_pk")
+    @JoinColumn(name = "agenda_id")
     private Agenda agenda;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_pk")
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @Builder

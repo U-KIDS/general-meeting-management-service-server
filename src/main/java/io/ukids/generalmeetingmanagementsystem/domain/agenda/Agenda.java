@@ -29,6 +29,10 @@ public class Agenda extends BaseTimeEntity {
 
     private String description;
 
+    private String agendaNumber;
+
+    private String agendaCreateBy;
+
     private AgendaStatus status;
 
     private AgendaResult result;
@@ -38,13 +42,15 @@ public class Agenda extends BaseTimeEntity {
     private LocalDateTime voteEndAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meeting_pk")
+    @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
     @Builder
-    public Agenda(String title, String description, Meeting meeting) {
+    public Agenda(String title, String description, String agendaNumber, String agendaCreateBy, Meeting meeting) {
         this.title = title;
         this.description = description;
+        this.agendaNumber = agendaNumber;
+        this.agendaCreateBy = agendaCreateBy;
         this.meeting = meeting;
         this.status = AgendaStatus.NOT_STARTED;
     }

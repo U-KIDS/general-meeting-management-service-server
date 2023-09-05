@@ -19,7 +19,7 @@ public class AgendaImage extends BaseTimeEntity {
     private Long id;
     private String imageUrl;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "agenda_pk")
+    @JoinColumn(name = "agenda_id")
     private Agenda agenda;
 
     @Builder
