@@ -9,15 +9,13 @@ import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/auth")
+@CrossOrigin
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -25,6 +23,7 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     public ApiDataResponse<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
+        System.out.println("nginx good");
         TokenDto tokenDto = authService.login(loginDto);
         return ApiDataResponse.of(HttpStatusCode.OK, tokenDto);
     }

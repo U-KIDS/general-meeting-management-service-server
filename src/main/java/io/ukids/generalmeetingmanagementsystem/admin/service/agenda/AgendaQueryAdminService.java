@@ -6,6 +6,8 @@ import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.AgendaRepository;
+import io.ukids.generalmeetingmanagementsystem.domain.agendaimage.AgendaImage;
+import io.ukids.generalmeetingmanagementsystem.domain.agendaimage.AgendaImageRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.MeetingRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.Vote;
@@ -27,13 +29,18 @@ import java.util.stream.Collectors;
 public class AgendaQueryAdminService {
 
     private final AgendaRepository agendaRepository;
-    private final MeetingRepository meetingRepository;
+    private final AgendaImageRepository agendaImageRepository;
     private final VoteRepository voteRepository;
     private final VoteQueryRepository voteQueryRepository;
 
     public AgendaDetailDto findOne(Long agendaId) {
         Agenda agenda = agendaRepository.findById(agendaId)
                 .orElseThrow(() -> new BaseException(ErrorCode.AGENDA_NOT_FOUND));
+
+        List<AgendaImage> images = agendaImageRepository.findAllByAgendaId(agendaId);
+        List<String> imageUrls = images.stream()
+                .map(AgendaImage::getImageUrl)
+                .collect(Collectors.toList());
 
         AgendaDetailDto.VotePreviewDto votePreviewDto = AgendaDetailDto.VotePreviewDto.builder()
                 .agree(voteRepository.countAllByVoteValue(VoteValue.AGREE))
@@ -45,6 +52,7 @@ public class AgendaQueryAdminService {
                 .title(agenda.getTitle())
                 .agendaStatus(agenda.getStatus())
                 .votePreviewDto(votePreviewDto)
+                .imageUrls(imageUrls)
                 .build();
     }
 

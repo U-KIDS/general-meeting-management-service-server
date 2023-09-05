@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/meeting")
+@CrossOrigin
 @RequiredArgsConstructor
 public class MeetingAdminController {
 

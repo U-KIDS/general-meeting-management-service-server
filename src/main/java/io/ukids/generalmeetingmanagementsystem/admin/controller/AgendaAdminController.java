@@ -21,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/agenda")
+@CrossOrigin
 @RequiredArgsConstructor
 public class AgendaAdminController {
 
