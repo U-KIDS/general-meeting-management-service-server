@@ -43,9 +43,9 @@ public class AgendaQueryAdminService {
                 .collect(Collectors.toList());
 
         AgendaDetailDto.VotePreviewDto votePreviewDto = AgendaDetailDto.VotePreviewDto.builder()
-                .agree(voteRepository.countAllByVoteValue(VoteValue.AGREE))
-                .disagree(voteRepository.countAllByVoteValue(VoteValue.DISAGREE))
-                .abstention(voteRepository.countAllByVoteValue(VoteValue.ABSTENTION))
+                .agree(voteRepository.countAllByAgendaIdAndVoteValue(agendaId, VoteValue.AGREE))
+                .disagree(voteRepository.countAllByAgendaIdAndVoteValue(agendaId, VoteValue.DISAGREE))
+                .abstention(voteRepository.countAllByAgendaIdAndVoteValue(agendaId, VoteValue.ABSTENTION))
                 .build();
 
         return AgendaDetailDto.builder()
