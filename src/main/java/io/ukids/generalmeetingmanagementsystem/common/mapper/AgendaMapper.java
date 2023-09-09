@@ -12,6 +12,8 @@ public class AgendaMapper {
     public Agenda map(AgendaInfoDto agendaInfoDto, Meeting meeting) {
         return Agenda.builder()
                 .title(agendaInfoDto.getTitle())
+                .agendaNumber(agendaInfoDto.getAgendaNumber())
+                .agendaCreateBy(agendaInfoDto.getAgendaCreateBy())
                 .meeting(meeting)
                 .build();
     }

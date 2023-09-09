@@ -25,11 +25,15 @@ public class MeetingDetailDto {
     public static class AgendaInfoDto {
         private Long agendaId;
         private String title;
+        private String agendaNumber;
+        private String agendaCreateBy;
         private AgendaStatus agendaStatus;
 
         public AgendaInfoDto(Agenda agenda) {
             this.agendaId = agenda.getId();
             this.title = agenda.getTitle();
+            this.agendaNumber = agenda.getAgendaNumber();
+            this.agendaCreateBy = agenda.getAgendaCreateBy();
             this.agendaStatus = agenda.getStatus();
         }
     }

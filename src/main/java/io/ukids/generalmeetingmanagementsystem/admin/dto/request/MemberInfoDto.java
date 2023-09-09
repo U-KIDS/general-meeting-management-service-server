@@ -1,12 +1,15 @@
 package io.ukids.generalmeetingmanagementsystem.admin.dto.request;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberInfoDto {
-    private final String name;
-    private final String studentName;
-    private final Integer grade;
-    private final String college;
-    private final String major;
+    private String name;
+    private String studentName;
+    private Integer grade;
+    private String college;
+    private String major;
 }

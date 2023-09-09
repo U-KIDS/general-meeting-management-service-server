@@ -38,14 +38,7 @@ public class MemberQueryAdminService {
     public MemberDetailDto findOnd(String studentNumber) {
         Member member = memberRepository.findByStudentNumber(studentNumber)
                 .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
-        return MemberDetailDto.builder()
-                .name(member.getName())
-                .activate(member.getActivate())
-                .college(member.getCollege())
-                .major(member.getMajor())
-                .grade(member.getGrade())
-                .studentNumber(member.getStudentNumber())
-                .build();
+        return new MemberDetailDto(member);
     }
 
 }

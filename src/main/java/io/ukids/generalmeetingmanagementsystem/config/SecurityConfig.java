@@ -51,7 +51,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
 
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilter(corsFilter)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(jwtAccessDeniedHandler)
                         .authenticationEntryPoint(jwtAuthenticationEntryPoint)

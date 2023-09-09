@@ -30,8 +30,6 @@ public class Meeting extends BaseTimeEntity {
 
     private LocalDateTime meetingDate;
 
-    private LocalDateTime meetingStartAt;
-
     @Builder
     public Meeting(String name, LocalDateTime meetingDate, String sponsor) {
         this.name = name;
@@ -40,15 +38,14 @@ public class Meeting extends BaseTimeEntity {
         this.activate = false;
     }
 
-    public void start() {
+    public void activate() {
         if (activate) {
             throw new BaseException(ErrorCode.MEETING_ALREADY_START);
         }
         activate = true;
-        meetingStartAt = LocalDateTime.now();
     }
 
-    public void end() {
+    public void deactivate() {
         if (!activate) {
             throw new BaseException(ErrorCode.MEETING_ALREADY_END);
         }

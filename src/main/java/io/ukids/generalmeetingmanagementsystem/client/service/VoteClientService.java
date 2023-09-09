@@ -3,6 +3,7 @@ package io.ukids.generalmeetingmanagementsystem.client.service;
 import io.ukids.generalmeetingmanagementsystem.client.dto.request.VoteClientRequestDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
+import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.AgendaRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
@@ -49,6 +50,25 @@ public class VoteClientService {
 
             return new CreateDto(vote.getId());
         }
+    }
+
+    @Transactional
+    public void vote(Long agendaId, String studentNumber, VoteValue voteValue) {
+        if(voteRepository.existsByAgenda_IdAndMember_StudentNumber(agendaId, studentNumber)){
+            throw new BaseException(AGENDA_ALREADY_VOTED);
+        }
+
+        Agenda agenda = agendaRepository.findById(agendaId)
+                .orElseThrow(() -> new BaseException(AGENDA_NOT_FOUND));
+        Member member = memberRepository.findByStudentNumber(studentNumber)
+                .orElseThrow(() -> new BaseException(MEMBER_NOT_FOUND));
+
+        Vote vote = Vote.builder()
+                .voteValue(voteValue)
+                .agenda(agenda)
+                .member(member)
+                .build();
+        voteRepository.save(vote);
     }
 
 }

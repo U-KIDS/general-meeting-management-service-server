@@ -10,12 +10,12 @@ import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
-import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin/meeting")
+@CrossOrigin
 @RequiredArgsConstructor
 public class MeetingAdminController {
 
@@ -46,25 +46,25 @@ public class MeetingAdminController {
         return ApiResponse.of(HttpStatusCode.OK, "회의가 정상적으로 삭제되었습니다.");
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/update")
     public ApiDataResponse<MeetingInfoDto> findOneUpdateValue(@PathVariable Long id) {
         MeetingInfoDto meeting = meetingQueryAdminService.findOneUpdateValue(id);
         return ApiDataResponse.of(HttpStatusCode.OK, meeting);
     }
 
-    @PatchMapping("/{meetingId}/start")
+    @PatchMapping("/{meetingId}/activate")
     public ApiResponse start(@PathVariable Long meetingId) {
-        meetingAdminService.start(meetingId);
+        meetingAdminService.activate(meetingId);
         return ApiResponse.of(HttpStatusCode.OK);
     }
 
-    @PatchMapping("{meetingId}/end")
+    @PatchMapping("/{meetingId}/deactivate")
     public ApiResponse end(@PathVariable Long meetingId) {
-        meetingAdminService.end(meetingId);
+        meetingAdminService.deactivate(meetingId);
         return ApiResponse.of(HttpStatusCode.OK);
     }
 
-    @PatchMapping("{meetingId}")
+    @PatchMapping("/{meetingId}")
     public ApiResponse update(
             @PathVariable Long meetingId,
             @RequestBody MeetingInfoDto meetingInfoDto ) {

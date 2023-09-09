@@ -17,7 +17,7 @@ public class MemberMapper {
 
     private final PasswordEncoder passwordEncoder;
 
-    public Member map(SignupDto signupDto, Authority authority) {
+    public Member map(SignupDto signupDto, String imageUrl, Authority authority) {
         return Member.builder()
                 .studentNumber(signupDto.getStudentNumber())
                 .password(passwordEncoder.encode(signupDto.getPassword()))
@@ -25,7 +25,7 @@ public class MemberMapper {
                 .college(signupDto.getCollege())
                 .major(signupDto.getMajor())
                 .grade(signupDto.getGrade())
-                .imageUrl(signupDto.getImageUrl())
+                .imageUrl(imageUrl)
                 .authorities(Collections.singleton(authority))
                 .build();
     }

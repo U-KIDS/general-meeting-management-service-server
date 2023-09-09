@@ -11,6 +11,7 @@ import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberQueryRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberSearchCondition;
+import io.ukids.generalmeetingmanagementsystem.domain.vote.VoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 public class MemberAdminService {
 
     private final MemberRepository memberRepository;
+    private final VoteRepository voteRepository;
 
     public void update(String studentNumber, MemberInfoDto memberInfoDto) {
         if (!memberRepository.existsByStudentNumber(memberInfoDto.getStudentName())) {
@@ -49,6 +51,7 @@ public class MemberAdminService {
     }
 
     public void delete(String studentNumber) {
+        voteRepository.deleteAllByMember_StudentNumber(studentNumber);
         memberRepository.deleteByStudentNumber(studentNumber);
     }
 }

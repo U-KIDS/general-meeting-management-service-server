@@ -29,6 +29,10 @@ public class Agenda extends BaseTimeEntity {
 
     private String description;
 
+    private String agendaNumber;
+
+    private String agendaCreateBy;
+
     private AgendaStatus status;
 
     private AgendaResult result;
@@ -38,19 +42,21 @@ public class Agenda extends BaseTimeEntity {
     private LocalDateTime voteEndAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meeting_pk")
+    @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
     @Builder
-    public Agenda(String title, String description, Meeting meeting) {
+    public Agenda(String title, String description, String agendaNumber, String agendaCreateBy, Meeting meeting) {
         this.title = title;
         this.description = description;
+        this.agendaNumber = agendaNumber;
+        this.agendaCreateBy = agendaCreateBy;
         this.meeting = meeting;
         this.status = AgendaStatus.NOT_STARTED;
     }
 
     public void start() {
-        if (!status.equals(AgendaStatus.NOT_STARTED)) {
+        if (status.equals(AgendaStatus.IN_PROGRESS)) {
             throw new BaseException(ErrorCode.AGENDA_ALREADY_STARTED);
         }
         status = AgendaStatus.IN_PROGRESS;
@@ -58,13 +64,20 @@ public class Agenda extends BaseTimeEntity {
     }
 
     public void end() {
-        if (!status.equals(AgendaStatus.COMPLETE)) {
+        if (status.equals(AgendaStatus.COMPLETE)) {
             throw new BaseException(ErrorCode.AGENDA_ALREADY_ENDED);
         }
         status = AgendaStatus.COMPLETE;
+        voteEndAt = LocalDateTime.now();
+    }
+
+    public void resolve(AgendaResult agendaResult) {
+        result = agendaResult;
     }
 
     public void update(AgendaInfoDto agendaInfoDto) {
         this.title = agendaInfoDto.getTitle();
+        this.agendaNumber = agendaInfoDto.getAgendaNumber();
+        this.agendaCreateBy = agendaInfoDto.getAgendaCreateBy();
     }
 }

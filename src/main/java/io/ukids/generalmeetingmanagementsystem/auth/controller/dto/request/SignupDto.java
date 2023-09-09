@@ -30,17 +30,13 @@ public class SignupDto {
     @NotNull
     private Integer grade;
 
-    @NotNull
-    private String imageUrl;
-
     @Builder
-    public SignupDto(String studentNumber, String password, String name, String college, String major, Integer grade, String imageUrl) {
+    public SignupDto(String studentNumber, String password, String name, String college, String major, Integer grade) {
         this.studentNumber = studentNumber;
         this.password = password;
         this.name = name;
         this.college = college;
         this.major = major;
         this.grade = grade;
-        this.imageUrl = imageUrl;
     }
 }

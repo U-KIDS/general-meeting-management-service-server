@@ -9,14 +9,21 @@ import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaResult;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.VoteSearchCondition;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.enums.VoteValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/agenda")
+@CrossOrigin
 @RequiredArgsConstructor
 public class AgendaAdminController {
 
@@ -34,8 +41,8 @@ public class AgendaAdminController {
     @GetMapping("/{agendaId}/vote")
     public ApiDataResponse<VoteListDto> queryVote(
             @PathVariable Long agendaId,
-            @RequestParam VoteValue voteValue,
-            @RequestParam String name,
+            @RequestParam(required = false) VoteValue voteValue,
+            @RequestParam(required = false) String name,
             Pageable pageable) {
 
         VoteSearchCondition condition = VoteSearchCondition.builder()
@@ -46,12 +53,14 @@ public class AgendaAdminController {
         return ApiDataResponse.of(HttpStatusCode.OK, voteListDto);
     }
 
-    @PostMapping("/meeting/{meetingId}")
+    @PostMapping(value = "/meeting/{meetingId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ApiDataResponse<CreateDto> create(
-            @RequestBody AgendaInfoDto agendaInfoDto,
+            @RequestPart AgendaInfoDto agendaInfoDto,
+            @RequestPart(required = false) List<MultipartFile> images,
             @PathVariable Long meetingId) {
 
-        CreateDto createDto = agendaAdminService.create(agendaInfoDto, meetingId);
+        System.out.println(images);
+        CreateDto createDto = agendaAdminService.create(agendaInfoDto, meetingId, images);
         return ApiDataResponse.of(HttpStatusCode.CREATED, createDto);
     }
 
@@ -69,4 +78,24 @@ public class AgendaAdminController {
         return ApiResponse.of(HttpStatusCode.OK, "안건이 성공적으로 수정되었습니다.");
     }
 
+    @PatchMapping("/{agendaId}/start")
+    public ApiResponse start(@PathVariable Long agendaId) {
+        agendaAdminService.start(agendaId);
+        return ApiResponse.of(HttpStatusCode.OK, "투표를 시작합니다.");
+    }
+
+    @PatchMapping("/{agendaId}/end")
+    public ApiResponse end(
+            @PathVariable Long agendaId) {
+        agendaAdminService.end(agendaId);
+        return ApiResponse.of(HttpStatusCode.OK, "투표를 종료합니다.");
+    }
+
+    @PatchMapping("/{agendaId}/resolve")
+    public ApiResponse resolve(
+            @PathVariable Long agendaId,
+            @RequestParam AgendaResult agendaResult) {
+        agendaAdminService.end(agendaId);
+        return ApiResponse.of(HttpStatusCode.OK, "투표를 종료합니다.");
+    }
 }

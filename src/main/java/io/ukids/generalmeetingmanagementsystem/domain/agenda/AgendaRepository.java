@@ -12,5 +12,6 @@ public interface AgendaRepository extends JpaRepository<Agenda, Long> {
     @Override
     Optional<Agenda> findById(Long aLong);
     List<Agenda> findAllByMeetingId(Long id);
+    void deleteAllByMeetingId(Long id);
 }
 
