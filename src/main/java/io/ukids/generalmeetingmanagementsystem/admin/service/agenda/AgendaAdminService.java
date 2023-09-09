@@ -8,6 +8,8 @@ import io.ukids.generalmeetingmanagementsystem.common.mapper.AgendaMapper;
 import io.ukids.generalmeetingmanagementsystem.common.util.S3Uploader;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.AgendaRepository;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaResult;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
 import io.ukids.generalmeetingmanagementsystem.domain.agendaimage.AgendaImage;
 import io.ukids.generalmeetingmanagementsystem.domain.agendaimage.AgendaImageRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.meeting.Meeting;
@@ -50,6 +52,24 @@ public class AgendaAdminService {
         voteRepository.deleteAllByAgendaId(agendaId);
         agendaImageRepository.deleteAllByAgendaId(agendaId);
         agendaRepository.deleteById(agendaId);
+    }
+
+    public void start(Long agendaId) {
+        Agenda agenda = agendaRepository.findById(agendaId)
+                .orElseThrow(() -> new BaseException(ErrorCode.AGENDA_NOT_FOUND));
+        agenda.start();
+    }
+
+    public void end(Long agendaId) {
+        Agenda agenda = agendaRepository.findById(agendaId)
+                .orElseThrow(() -> new BaseException(ErrorCode.AGENDA_NOT_FOUND));
+        agenda.end();
+    }
+
+    public void resolve(Long agendaId, AgendaResult agendaResult) {
+        Agenda agenda = agendaRepository.findById(agendaId)
+                .orElseThrow(() -> new BaseException(ErrorCode.AGENDA_NOT_FOUND));
+        agenda.resolve(agendaResult);
     }
 
     public void update(Long agendaId, AgendaInfoDto agendaInfoDto) {

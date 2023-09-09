@@ -56,7 +56,7 @@ public class Agenda extends BaseTimeEntity {
     }
 
     public void start() {
-        if (!status.equals(AgendaStatus.NOT_STARTED)) {
+        if (status.equals(AgendaStatus.IN_PROGRESS)) {
             throw new BaseException(ErrorCode.AGENDA_ALREADY_STARTED);
         }
         status = AgendaStatus.IN_PROGRESS;
@@ -64,13 +64,20 @@ public class Agenda extends BaseTimeEntity {
     }
 
     public void end() {
-        if (!status.equals(AgendaStatus.COMPLETE)) {
+        if (status.equals(AgendaStatus.COMPLETE)) {
             throw new BaseException(ErrorCode.AGENDA_ALREADY_ENDED);
         }
         status = AgendaStatus.COMPLETE;
+        voteEndAt = LocalDateTime.now();
+    }
+
+    public void resolve(AgendaResult agendaResult) {
+        result = agendaResult;
     }
 
     public void update(AgendaInfoDto agendaInfoDto) {
         this.title = agendaInfoDto.getTitle();
+        this.agendaNumber = agendaInfoDto.getAgendaNumber();
+        this.agendaCreateBy = agendaInfoDto.getAgendaCreateBy();
     }
 }

@@ -9,6 +9,8 @@ import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaResult;
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.VoteSearchCondition;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.enums.VoteValue;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +41,8 @@ public class AgendaAdminController {
     @GetMapping("/{agendaId}/vote")
     public ApiDataResponse<VoteListDto> queryVote(
             @PathVariable Long agendaId,
-            @RequestParam VoteValue voteValue,
-            @RequestParam String name,
+            @RequestParam(required = false) VoteValue voteValue,
+            @RequestParam(required = false) String name,
             Pageable pageable) {
 
         VoteSearchCondition condition = VoteSearchCondition.builder()
@@ -76,4 +78,24 @@ public class AgendaAdminController {
         return ApiResponse.of(HttpStatusCode.OK, "안건이 성공적으로 수정되었습니다.");
     }
 
+    @PatchMapping("/{agendaId}/start")
+    public ApiResponse start(@PathVariable Long agendaId) {
+        agendaAdminService.start(agendaId);
+        return ApiResponse.of(HttpStatusCode.OK, "투표를 시작합니다.");
+    }
+
+    @PatchMapping("/{agendaId}/end")
+    public ApiResponse end(
+            @PathVariable Long agendaId) {
+        agendaAdminService.end(agendaId);
+        return ApiResponse.of(HttpStatusCode.OK, "투표를 종료합니다.");
+    }
+
+    @PatchMapping("/{agendaId}/resolve")
+    public ApiResponse resolve(
+            @PathVariable Long agendaId,
+            @RequestParam AgendaResult agendaResult) {
+        agendaAdminService.end(agendaId);
+        return ApiResponse.of(HttpStatusCode.OK, "투표를 종료합니다.");
+    }
 }
