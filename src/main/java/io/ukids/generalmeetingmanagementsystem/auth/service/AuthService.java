@@ -8,6 +8,7 @@ import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
 import io.ukids.generalmeetingmanagementsystem.common.mapper.MemberMapper;
+import io.ukids.generalmeetingmanagementsystem.common.util.S3Uploader;
 import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.member.MemberRepository;
 import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
@@ -18,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,6 +29,7 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberRepository memberRepository;
+    private final S3Uploader s3Uploader;
     private final MemberMapper memberMapper;
 
     public TokenDto login(LoginDto loginDto) {
@@ -47,13 +50,14 @@ public class AuthService {
     }
 
     @Transactional
-    public CreateDto signup(SignupDto signupDto) {
+    public CreateDto signup(SignupDto signupDto, MultipartFile image) {
 
         if (memberRepository.existsByStudentNumber(signupDto.getStudentNumber())) {
             throw new BaseException(ErrorCode.MEMBER_ALREADY_EXISTS);
         }
 
-        Member member = memberMapper.map(signupDto, Authority.ROLE_USER);
+        String imageUrl = s3Uploader.upload(image);
+        Member member = memberMapper.map(signupDto, imageUrl, Authority.ROLE_USER);
         Long id = memberRepository.save(member).getId();
         return new CreateDto(id);
     }

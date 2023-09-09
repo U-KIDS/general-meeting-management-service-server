@@ -9,7 +9,9 @@ import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -28,9 +30,11 @@ public class AuthController {
         return ApiDataResponse.of(HttpStatusCode.OK, tokenDto);
     }
 
-    @PostMapping(value = "/signup")
-    public ApiDataResponse<CreateDto> signup(@Valid @RequestBody SignupDto signupDto) {
-        CreateDto memberCreateDto = authService.signup(signupDto);
+    @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ApiDataResponse<CreateDto> signup(
+            @RequestPart SignupDto signupDto,
+            @RequestPart MultipartFile image) {
+        CreateDto memberCreateDto = authService.signup(signupDto, image);
         return ApiDataResponse.of(HttpStatusCode.CREATED, memberCreateDto);
     }
 }
