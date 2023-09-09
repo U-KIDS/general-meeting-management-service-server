@@ -17,7 +17,9 @@ public class CorsConfig {
         corsConfiguration.addAllowedOriginPattern("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedOrigin("http://localhost:8080");
         corsConfiguration.addAllowedOrigin("https://general-meeting-management-system-admin.vercel.app");
+        corsConfiguration.addAllowedOrigin("https://general-meeting-management-system-frontend.vercel.app/signup");
 
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
