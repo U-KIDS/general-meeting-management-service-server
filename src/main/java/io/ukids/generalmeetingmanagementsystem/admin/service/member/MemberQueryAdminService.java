@@ -2,6 +2,7 @@ package io.ukids.generalmeetingmanagementsystem.admin.service.member;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MemberListDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.VoteOverviewDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
@@ -40,5 +41,4 @@ public class MemberQueryAdminService {
                 .orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
         return new MemberDetailDto(member);
     }
-
 }

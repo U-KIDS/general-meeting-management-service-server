@@ -13,5 +13,6 @@ public class MemberListDto {
     private String college;
     private String major;
     private Boolean activate;
+    private Integer grade;
 
 }

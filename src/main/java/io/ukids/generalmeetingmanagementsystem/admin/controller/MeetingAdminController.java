@@ -72,4 +72,10 @@ public class MeetingAdminController {
         return ApiResponse.of(HttpStatusCode.OK, "회의가 정상적으로 수정되었습니다.");
     }
 
+    @GetMapping("/overview")
+    public ApiDataResponse<ListDto<MeetingListDto>> queryOverview() {
+        ListDto<MeetingListDto> result = meetingQueryAdminService.queryOverview();
+        return ApiDataResponse.of(HttpStatusCode.OK, result);
+    }
+
 }

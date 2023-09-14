@@ -35,6 +35,7 @@ public class MemberClientService {
                 .college(member.getCollege())
                 .major(member.getMajor())
                 .name(member.getName())
+                .imageUrl(member.getImageUrl())
                 .meetingList(meetingList.stream()
                         .map(m -> new MeetingClientDto(m))
                         .collect(Collectors.toList()))

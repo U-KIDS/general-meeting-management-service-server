@@ -14,5 +14,6 @@ public class MemberDetailClientResponseDto {
     private String college;
     private String major;
     private String name;
+    private String imageUrl;
     private List<MeetingClientDto> meetingList;
 }

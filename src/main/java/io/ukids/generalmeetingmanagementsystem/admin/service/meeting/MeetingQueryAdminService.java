@@ -3,6 +3,7 @@ package io.ukids.generalmeetingmanagementsystem.admin.service.meeting;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingListDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.VoteOverviewDto;
 import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.exception.BaseException;
 import io.ukids.generalmeetingmanagementsystem.common.exception.ErrorCode;
@@ -61,4 +62,12 @@ public class MeetingQueryAdminService {
         return new MeetingInfoDto(meeting);
     }
 
+    public ListDto<MeetingListDto> queryOverview() {
+        List<Meeting> meetings = meetingRepository.findAllByActivate(true);
+        List<MeetingListDto> result = meetings.stream()
+                .map(meetingMapper::map)
+                .collect(Collectors.toList());
+
+        return new ListDto(result);
+    }
 }

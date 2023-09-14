@@ -2,10 +2,13 @@ package io.ukids.generalmeetingmanagementsystem.admin.controller;
 
 import io.ukids.generalmeetingmanagementsystem.admin.dto.request.AgendaInfoDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.AgendaDetailDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.MeetingDetailDto;
 import io.ukids.generalmeetingmanagementsystem.admin.dto.response.VoteListDto;
+import io.ukids.generalmeetingmanagementsystem.admin.dto.response.VoteOverviewDto;
 import io.ukids.generalmeetingmanagementsystem.admin.service.agenda.AgendaAdminService;
 import io.ukids.generalmeetingmanagementsystem.admin.service.agenda.AgendaQueryAdminService;
 import io.ukids.generalmeetingmanagementsystem.common.dto.CreateDto;
+import io.ukids.generalmeetingmanagementsystem.common.dto.ListDto;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiDataResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.ApiResponse;
 import io.ukids.generalmeetingmanagementsystem.common.response.HttpStatusCode;
@@ -95,7 +98,19 @@ public class AgendaAdminController {
     public ApiResponse resolve(
             @PathVariable Long agendaId,
             @RequestParam AgendaResult agendaResult) {
-        agendaAdminService.end(agendaId);
-        return ApiResponse.of(HttpStatusCode.OK, "투표를 종료합니다.");
+        agendaAdminService.resolve(agendaId, agendaResult);
+        return ApiResponse.of(HttpStatusCode.OK);
+    }
+
+    @GetMapping("/overview/{meetingId}")
+    public ApiDataResponse<ListDto<MeetingDetailDto.AgendaInfoDto>> queryOverview(@PathVariable Long meetingId) {
+        ListDto<MeetingDetailDto.AgendaInfoDto> result = agendaQueryAdminService.queryOverview(meetingId);
+        return ApiDataResponse.of(HttpStatusCode.OK, result);
+    }
+
+    @GetMapping("/overview/{agendaId}/vote")
+    public ApiDataResponse<VoteOverviewDto> queryVoteOverview(@PathVariable Long agendaId) {
+        VoteOverviewDto result = agendaQueryAdminService.queryVoteOverview(agendaId);
+        return ApiDataResponse.of(HttpStatusCode.OK, result);
     }
 }

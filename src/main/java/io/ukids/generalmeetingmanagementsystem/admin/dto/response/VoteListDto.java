@@ -1,16 +1,32 @@
 package io.ukids.generalmeetingmanagementsystem.admin.dto.response;
 
+import io.ukids.generalmeetingmanagementsystem.domain.agenda.enums.AgendaStatus;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.Vote;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.enums.VoteValue;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Builder
+@Getter
+@NoArgsConstructor
 public class VoteListDto {
+    private String agendaName;
+    private AgendaStatus agendaStatus;
     private Integer size;
-    private List<VoteInfoDto> voteInfoDtos;
+    private List<VoteInfoDto> votes;
 
+    @Builder
+    public VoteListDto(String agendaName, AgendaStatus agendaStatus, Integer size, List<VoteInfoDto> votes) {
+        this.agendaName = agendaName;
+        this.agendaStatus = agendaStatus;
+        this.size = size;
+        this.votes = votes;
+    }
+
+    @Getter
+    @NoArgsConstructor
     public static class VoteInfoDto {
         private String name;
         private VoteValue voteValue;

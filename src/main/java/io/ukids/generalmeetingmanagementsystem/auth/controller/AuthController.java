@@ -25,7 +25,6 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     public ApiDataResponse<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
-        System.out.println("nginx good");
         TokenDto tokenDto = authService.login(loginDto);
         return ApiDataResponse.of(HttpStatusCode.OK, tokenDto);
     }

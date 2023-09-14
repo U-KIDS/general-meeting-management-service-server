@@ -50,12 +50,11 @@ public class Member extends BaseTimeEntity {
         this.grade = grade;
         this.imageUrl = imageUrl;
         this.authorities = authorities;
-        this.activate = true;
+        this.activate = false;
     }
 
     public void update(MemberInfoDto memberInfoDto) {
         this.name = memberInfoDto.getName();
-        this.studentNumber = memberInfoDto.getStudentName();
         this.grade = memberInfoDto.getGrade();
         this.college = memberInfoDto.getCollege();
         this.major = memberInfoDto.getMajor();
@@ -77,5 +76,12 @@ public class Member extends BaseTimeEntity {
         if (!activate) {
             throw new BaseException(ErrorCode.MEMBER_NOT_ACTIVATE);
         }
+    }
+
+    public boolean matchPassword(String password) {
+        if(this.password.equals(password)) {
+            return true;
+        }
+        return false;
     }
 }

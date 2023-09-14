@@ -1,10 +1,13 @@
 package io.ukids.generalmeetingmanagementsystem.domain.member;
 
+import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -13,4 +16,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByStudentNumber(String studentNumber);
     Boolean existsByStudentNumber(String username);
     void deleteByStudentNumber(String studentNumber);
+    List<Member> findAllByActivateAndAuthoritiesIn(Boolean activate, Set<Authority> authorities);
+    List<Member> findAllByActivateAndAuthoritiesInOrderByNameAsc(Boolean activate, Set<Authority> authorities);
 }

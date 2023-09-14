@@ -37,6 +37,7 @@ public class MemberMapper {
                 .college(member.getCollege())
                 .major(member.getMajor())
                 .activate(member.getActivate())
+                .grade(member.getGrade())
                 .build();
     }
 }

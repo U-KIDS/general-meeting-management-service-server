@@ -1,11 +1,13 @@
 package io.ukids.generalmeetingmanagementsystem.domain.vote;
 
 import io.ukids.generalmeetingmanagementsystem.domain.agenda.Agenda;
+import io.ukids.generalmeetingmanagementsystem.domain.member.Member;
 import io.ukids.generalmeetingmanagementsystem.domain.vote.enums.VoteValue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface VoteRepository extends JpaRepository<Vote,Long> {
@@ -16,4 +18,5 @@ public interface VoteRepository extends JpaRepository<Vote,Long> {
     void deleteAllByAgendaId(Long agendaId);
     void deleteAllByAgenda(Agenda agenda);
     void deleteAllByMember_StudentNumber(String studentNumber);
+    Optional<Vote> findByAgendaIdAndMember(Long agendaId, Member member);
 }

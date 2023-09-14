@@ -15,7 +15,7 @@ public class AgendaInfoDto {
     @Builder
     public AgendaInfoDto(Agenda agenda) {
         this.title = agenda.getTitle();
-        this.agendaNumber = getAgendaNumber();
+        this.agendaNumber = agenda.getAgendaNumber();
         this.agendaCreateBy = agenda.getAgendaCreateBy();
     }
 }

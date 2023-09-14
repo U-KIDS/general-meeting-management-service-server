@@ -16,6 +16,7 @@ public enum ErrorCode {
 
     // Business Exception
     NOT_AUTHENTICATED(HttpStatusCode.UNAUTHORIZED.getStatus(), "등록된 인증 정보가 없습니다."),
+    NOT_MATCHES_PASSWORD(HttpStatusCode.UNAUTHORIZED.getStatus(), "비밀번호가 일치하지 않습니다."),
 
     MEMBER_NOT_FOUND(HttpStatusCode.BAD_REQUEST.getStatus(), "유저를 찾을 수 없습니다."),
     MEMBER_ALREADY_EXISTS(HttpStatusCode.BAD_REQUEST.getStatus(), "이미 가입된 유저입니다."),

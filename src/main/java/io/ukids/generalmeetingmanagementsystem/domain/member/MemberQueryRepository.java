@@ -1,5 +1,7 @@
 package io.ukids.generalmeetingmanagementsystem.domain.member;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import io.ukids.generalmeetingmanagementsystem.domain.member.enums.Authority;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.ukids.generalmeetingmanagementsystem.domain.member.QMember.member;
@@ -31,6 +34,7 @@ public class MemberQueryRepository {
                         containsName(condition.getName()),
                         containsAuthority(condition.getAuthority())
                 )
+                .orderBy(orderBy())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -69,5 +73,14 @@ public class MemberQueryRepository {
             return null;
         }
         return member.authorities.contains(searchAuthority);
+    }
+
+    private OrderSpecifier[] orderBy() {
+        List<OrderSpecifier> orderSpecifiers = new ArrayList<>();
+
+        orderSpecifiers.add(new OrderSpecifier(Order.DESC, member.activate));
+        orderSpecifiers.add(new OrderSpecifier(Order.ASC, member.name));
+
+        return orderSpecifiers.toArray(new OrderSpecifier[orderSpecifiers.size()]);
     }
 }
